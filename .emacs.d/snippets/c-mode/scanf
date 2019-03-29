@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: scanf
+# key: scanf
+# --
+scanf("${1:%d}", ${2:&var});
