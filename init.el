@@ -30,7 +30,7 @@
   (package-install 'use-package))
 ;;
 
-;; Initialize monokai theme and set the background to an easy-on-the-eyes dark color
+;; Initialize the monokai theme and set the background to an easy-on-the-eyes dark color
 ; I have planned to make my own Witchmacs theme based off the monokai one but for now, I use monokai because I like it
 (unless (package-installed-p 'monokai-theme)
   (package-refresh-contents)
