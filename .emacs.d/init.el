@@ -119,7 +119,7 @@
   (dashboard-setup-startup-hook)
   (setq dashboard-items '((recents . 5)))
   (setq dashboard-banner-logo-title "W I T C H M A C S")
-  (setq dashboard-startup-banner "/path/to/marisa.png") ; Remember to switch this to the path to your Marisa picture
+  (setq dashboard-startup-banner "~/.emacs.d/marivector.png")
   (setq dashboard-center-content t)
   (setq dashboard-show-shortcuts nil))
 
