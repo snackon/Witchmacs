@@ -49,6 +49,9 @@
 ; Enable line numbers on the left
 (global-linum-mode t)
 
+; Enable line numbers on the left
+(global-linum-mode t)
+
 ; Disable the default startup screen
 (setq inhibit-startup-message t)
 
