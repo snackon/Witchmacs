@@ -59,7 +59,7 @@
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 
-; Ctrl + v outside Emacs lets you paste it on Emacs with p and vice versa
+; Ctrl + c outside Emacs lets you paste it on Emacs with p and vice versa
 (setq x-select-enable-clipboard t)
 
 ; Disable automatic creation of backup files
@@ -94,9 +94,9 @@
 (electric-pair-mode t)
 
 ; This makes the line in dashboard be complete instead of finish abruptly at half (you might not need this)
-(set-fontset-font "fontset-default"
-                  (cons page-break-lines-char page-break-lines-char)
-                  (face-attribute 'default :family))
+;(set-fontset-font "fontset-default"
+;                  (cons page-break-lines-char page-break-lines-char)
+;                  (face-attribute 'default :family))
 ;;
 
 ;; Use-package section
