@@ -34,49 +34,76 @@
 (unless (package-installed-p 'monokai-theme)
   (package-refresh-contents)
   (package-install 'monokai-theme))
-;;
 
-;; Disable automatic creation of backup files
-(setq make-backup-files nil)
-(setq auto-save-default nil)
-;;
-
-;; Make scrolling not so aggressive
-(setq scroll-conservatively 100)
-;;
-
-;; Disable the heart-attack-inducing ringbell
-(setq ring-bell-function 'ignore)
-;;
-
-;; Set the standard indent size to 4 spaces
-(setq-default standard-indent 4)
-; Set the default tab width to 4 spaces
-(setq-default tab-width 4)
-; Set C mode to use the default tab width
-(setq c-basic-offset tab-width)
-;;
-
-;; Set the monokai background to a easy-on-the-eyes dark color
+; Set the monokai background to a easy-on-the-eyes dark color
 (setq monokai-background "#262626")
 ;;
 
-;; Typing "lambda" makes the lambda letter to appear instead
-(global-prettify-symbols-mode )
-;;
+;; QOL section
 
-;; This makes the line in dashboard be complete instead of finish abruptly at half (You might not need this
+; Enable to show in the modeline which line and column you are in 
+;powerline enables both of these by default, but if you don't want to use powerline you can uncomment these
+;(line-number-mode 1)
+;(column-number-mode 1)
+
+; Enable line numbers on the left
+(global-linum-mode t)
+
+; Disable the default startup screen
+(setq inhibit-startup-message t)
+
+; Disable most gui elements
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+(scroll-bar-mode -1)
+
+; Ctrl + v outside Emacs lets you paste it on Emacs with p and vice versa
+(setq x-select-enable-clipboard t)
+
+; Disable automatic creation of backup files
+(setq make-backup-files nil)
+(setq auto-save-default nil)
+
+; Make scrolling not so aggressive
+(setq scroll-conservatively 100)
+
+; Disable the heart-attack-inducing ringbell
+(setq ring-bell-function 'ignore)
+
+; Set the standard indent size to 4 spaces
+(setq-default standard-indent 4)
+
+; Set the default tab width to 4 spaces
+(setq-default tab-width 4)
+
+; Set C mode to use the default tab width
+(setq c-basic-offset tab-width)
+
+; Typing "lambda" makes the lambda letter to appear instead
+(global-prettify-symbols-mode )
+
+; Make brackets have matching pairs
+(setq electric-pair-pairs '(
+                           (?\{ . ?\})
+                           (?\( . ?\))
+                           (?\[ . ?\])
+                           (?\" . ?\")
+                          ))
+(electric-pair-mode t)
+
+; This makes the line in dashboard be complete instead of finish abruptly at half (you might not need this)
 (set-fontset-font "fontset-default"
                   (cons page-break-lines-char page-break-lines-char)
                   (face-attribute 'default :family))
 ;;
 
 ;; Use-package section
+
 ; Initialize spaceline
 (use-package spaceline
   :ensure t)
-; Initialize powerline and utilize the spaceline theme
 
+; Initialize powerline and utilize the spaceline theme
 (use-package powerline
   :ensure t
   :init
@@ -95,30 +122,38 @@
   (setq dashboard-show-shortcuts nil))
 
 ; Initialize which-key
+; Incredibly useful package; press tab to see possible command completions
 (use-package which-key
   :ensure t
   :init
   (which-key-mode))
 
 ; Initialize evil mode
+; Vim keybindings in Emacs. Please note that Witchmacs has NO other evil-mode compatibility packages because I like to KISS
 (use-package evil
   :ensure t
   :init
   (evil-mode 1))
 
-; Initialize bacon
+; Initialize beacon
+; You might find beacon an unnecesary package but I find it very neat. It briefly highlights the cursor position when switching
+; to a new buffer
 (use-package beacon
   :ensure t
   :init
   (beacon-mode 1))
 
-; Initialize avy 
+; Initialize avy
+; Avy is a very useful package; instead of having to move your cursor to a line that is very far away, just do M - s and type
+; the character that you want to move to
 (use-package avy
   :ensure t
   :bind
   ("M-s" . avy-goto-char))
 
 ; Initialize switch-window
+; Switch window is a neat package because instead of having to painstakingly do Cc - o until you're in the window you want to
+; edit, you can just do Cc - o and pick the one you want to move to according to the letter it is assigned to
 (use-package switch-window
   :ensure t
   :config
@@ -132,6 +167,7 @@
   ([remap other-window] . switch-window))
 
 ; Initialize yasnippet and snippets for C and C++ mode
+; Currently I have this set up for C and C++ mode only but this might change in the future if there is enough interest
 (use-package yasnippet
   :ensure t
   :config
@@ -175,37 +211,4 @@
   (add-hook 'c++-mode-hook 'irony-mode)
   (add-hook 'c-mode-hook 'irony-mode)
   (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
-;
 ;;
-
-;; Make brackets have matching pairs
-(setq electric-pair-pairs '(
-                           (?\{ . ?\})
-                           (?\( . ?\))
-                           (?\[ . ?\])
-                           (?\" . ?\")
-                          ))
-(electric-pair-mode t)
- ;;
-
-;; Ctrl + v outside Emacs lets you paste it on Emacs with p and vice versa
-(setq x-select-enable-clipboard t)
-;;
-
-;; Disable the default startup screen
-(setq inhibit-startup-message t)
-;;
-
-;; Enable line numbers on the left
-(global-linum-mode t)
-;;
-
-;; Disable most gui elements
-(tool-bar-mode -1)
-(menu-bar-mode -1)
-(scroll-bar-mode -1)
-;;
-
-;;powerline enables both of these by default, but if you don't want to use powerline you can uncomment these
-;;(line-number-mode 1)
-;;(column-number-mode 1)
