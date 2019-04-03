@@ -9,6 +9,9 @@ Configuration files for emacs to add a cute Marisa image and a few custom snippe
 # Quick install
 `git clone https://github.com/snackon/Witchmacs ~/.emacs.d`
 
+# Dependencies
+`clang` as backend for C and C++ snippets
+
 # TODO
 * Add and configure some extra packages (org mode, diminish, etc)
 * Make dashboard cooler
