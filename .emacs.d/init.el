@@ -35,6 +35,7 @@
 (unless (package-installed-p 'monokai-theme)
   (package-refresh-contents)
   (package-install 'monokai-theme))
+(load-theme 'monokai t)
 
 ; Set the monokai background to an easy-on-the-eyes dark color
 (setq monokai-background "#262626")
