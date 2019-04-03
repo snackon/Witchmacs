@@ -31,7 +31,7 @@
 ;;
 
 ;; Initialize monokai theme
-; I have planned to make my own Witchmacs theme based off the monokai theme but for now, I use monokai because I like it
+; I have planned to make my own Witchmacs theme based off the monokai one but for now, I use monokai because I like it
 (unless (package-installed-p 'monokai-theme)
   (package-refresh-contents)
   (package-install 'monokai-theme))
@@ -42,8 +42,8 @@
 
 ;; QOL section
 
-; Enable to show in the modeline which line and column you are in 
-;powerline enables both of these by default, but if you don't want to use powerline you can uncomment these
+; Show in the modeline which line and column you are in 
+; powerline enables both of these by default, but if you don't want to use powerline you can uncomment these
 ;(line-number-mode 1)
 ;(column-number-mode 1)
 
@@ -138,7 +138,7 @@
 
 ; Initialize beacon
 ; You might find beacon an unnecesary package but I find it very neat. It briefly highlights the cursor position when switching
-; to a new buffer
+; to a new window or buffer
 (use-package beacon
   :ensure t
   :init
