@@ -11,6 +11,6 @@ Configuration files for emacs to add a cute Marisa image and a few custom snippe
 `git clone https://github.com/snackon/Witchmacs ~/.emacs.d`
 
 # TODO
-* Add some extra packages (org mode, diminish, etc)
+* Add and configure some extra packages (org mode, diminish, etc)
 * Make custom Witchmacs theme
 * Clean up/organize init.el
