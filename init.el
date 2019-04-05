@@ -49,8 +49,8 @@
 ; Enable line numbers on the left
 (global-linum-mode t)
 
-; Enable line numbers on the left
-(global-linum-mode t)
+; Show which parenthesis belongs to which one
+(show-paren-mode 1)
 
 ; Disable the default startup screen
 (setq inhibit-startup-message t)
