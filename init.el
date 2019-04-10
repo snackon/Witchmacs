@@ -31,12 +31,12 @@
 ;;
 
 ;; Initialize the monokai theme and set the background to an easy-on-the-eyes dark color
-; I have planned to make my own Witchmacs theme based off the monokai one but for now, I use monokai because I like it
+										; I have planned to make my own Witchmacs theme based off the monokai one but for now, I use monokai because I like it
 (unless (package-installed-p 'monokai-theme)
   (package-refresh-contents)
   (package-install 'monokai-theme))
+(setq monokai-background "#262626" )
 (load-theme 'monokai t)
-(setq monokai-background "#262626")
 ;;
 
 ;; QOL section
@@ -136,7 +136,13 @@
 (use-package evil
   :ensure t
   :init
+  (setq evil-want-keybinding nil)
   (evil-mode 1))
+
+(use-package evil-collection
+  :ensure t
+  :config
+  (evil-collection-init))
 
 ; Initialize beacon
 ; You might find beacon an unnecesary package but I find it very neat. It briefly highlights the cursor position when switching
