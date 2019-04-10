@@ -132,13 +132,14 @@
   (which-key-mode))
 
 ; Initialize evil mode
-; Vim keybindings in Emacs. Please note that Witchmacs has NO other evil-mode compatibility packages because I like to KISS
+; Vim keybindings in Emacs. Please note that Witchmacs has NO other evil-mode compatibility packages because I like to KISS EDIT: I no longer like to KISS
 (use-package evil
   :ensure t
   :init
   (setq evil-want-keybinding nil)
   (evil-mode 1))
 
+; As of April 10th 2019, I use the evil-collection package to make Vim keybindings work in many places where they don't. If this feels like unnecesary bloat to you, please let me know
 (use-package evil-collection
   :ensure t
   :config
@@ -188,22 +189,18 @@
   :ensure t
   :config
   (setq company-idle-delay 0)
-  (setq company-minimum-prefix-length 3))
- 
-(with-eval-after-load 'company
+  (setq company-minimum-prefix-length 3)
   (define-key company-active-map (kbd "M-n") nil)
   (define-key company-active-map (kbd "M-p") nil)
   (define-key company-active-map (kbd "C-n") #'company-select-next)
   (define-key company-active-map (kbd "C-p") #'company-select-previous)
-  (define-key company-active-map (kbd "SPC") #'company-abort))
- 
-(add-hook 'c++-mode-hook 'yas-minor-mode)
-(add-hook 'c-mode-hook 'yas-minor-mode)
- 
-(with-eval-after-load 'company
+  (define-key company-active-map (kbd "SPC") #'company-abort)
   (add-hook 'c++-mode-hook 'company-mode)
   (add-hook 'c-mode-hook 'company-mode))
- 
+
+(add-hook 'c++-mode-hook 'yas-minor-mode)
+(add-hook 'c-mode-hook 'yas-minor-mode)
+
 (use-package company-c-headers
   :ensure t)
  
