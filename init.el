@@ -31,12 +31,12 @@
 ;;
 
 ;; Initialize the monokai theme and set the background to an easy-on-the-eyes dark color
-										; I have planned to make my own Witchmacs theme based off the monokai one but for now, I use monokai because I like it
+; I have planned to make my own Witchmacs theme based off the monokai one but for now, I use monokai because I like it
 (unless (package-installed-p 'monokai-theme)
   (package-refresh-contents)
-  (package-install 'monokai-theme))
-(setq monokai-background "#262626" )
-(load-theme 'monokai t)
+  (package-install 'monokai-theme)
+  (load-theme 'monokai t))
+  (setq monokai-background "#262626")
 ;;
 
 ;; QOL section
@@ -132,18 +132,11 @@
   (which-key-mode))
 
 ; Initialize evil mode
-; Vim keybindings in Emacs. Please note that Witchmacs has NO other evil-mode compatibility packages because I like to KISS EDIT: I no longer like to KISS
+; Vim keybindings in Emacs. Please note that Witchmacs has NO other evil-mode compatibility packages because I like to KISS
 (use-package evil
   :ensure t
   :init
-  (setq evil-want-keybinding nil)
   (evil-mode 1))
-
-; As of April 10th 2019, I use the evil-collection package to make Vim keybindings work in many places where they don't. If this feels like unnecesary bloat to you, please let me know
-(use-package evil-collection
-  :ensure t
-  :config
-  (evil-collection-init))
 
 ; Initialize beacon
 ; You might find beacon an unnecesary package but I find it very neat. It briefly highlights the cursor position when switching
@@ -217,3 +210,21 @@
   (add-hook 'c-mode-hook 'irony-mode)
   (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
 ;;
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-enabled-themes (quote (monokai)))
+ '(custom-safe-themes
+   (quote
+	("bd7b7c5df1174796deefce5debc2d976b264585d51852c962362be83932873d9" default)))
+ '(package-selected-packages
+   (quote
+	(company-irony company-c-headers company yasnippet-snippets yasnippet switch-window avy beacon evil-collection evil which-key dashboard spaceline monokai-theme use-package))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
