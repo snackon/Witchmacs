@@ -6,6 +6,11 @@ The cutest Emacs distribution
 # Introduction
 Configuration files for emacs to add a cute Marisa image and a few custom snippets
 
+# Why would I use this?
+>*What's the difference between a villain and a super villain? Presentation!*
+
+Currently, the appeal of Witchmacs is seeing a cute Marisa picture everytime you start up Emacs. Also, it is a very basic config which means you can easily add, edit or remove things as you like. You can use this as a building block when making your OWN Emacs config!
+
 # Quick install
 `git clone https://github.com/snackon/Witchmacs ~/.emacs.d`
 
