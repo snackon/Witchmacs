@@ -30,8 +30,7 @@
   (package-install 'use-package))
 ;;
 
-;; Initialize the monokai theme and set the background to an easy-on-the-eyes dark color
-; I have planned to make my own Witchmacs theme based off the monokai one but for now, I use monokai because I like it
+;; By default, Witchmacs comes with my own theme I made based off monokai. If you want to use other theme and don't know how, please look at earlier versions of Witchmacs for an example on how to do so
 (load-theme 'Witchmacs t)
   
 ;;
@@ -207,3 +206,17 @@
   (add-hook 'c-mode-hook 'irony-mode)
   (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
 ;;
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+	(company-irony company-c-headers company yasnippet-snippets yasnippet switch-window avy beacon evil which-key dashboard spaceline use-package))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
