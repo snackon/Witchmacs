@@ -105,10 +105,10 @@
  '(which-key-group-description-face ((((class color) (min-colors 257)) (:foreground "#F92672" :weight bold)) (((class color) (min-colors 89)) (:foreground "#FF1493" :weight bold))))
  '(dashboard-text-banner ((t (:foreground "#E6DB74"))))
  '(dashboard-heading ((t (:foreground "#E6DB74"))))
- '(spaceline-highlight-face ((t (:background "#E6DB74" :foreground "#3E3D31"))))
+ '(spaceline-highlight-face ((t (:background "#492A29" :foreground "#F8F8F2"))))
  '(link ((t (:foreground "#99CCFF" :underline t))))
- '(default ((((class color) (min-colors 257)) (:foreground "#F8F8F2" :background "#262626")) (((class color) (min-colors 89)) (:foreground "#F5F5F5" :background "#1B1E1C"))))
  '(company-preview-common ((t (:foreground "#99CCFF" :underline t))))
- '(company-tooltip-common-selection ((t (:background "#99CCFF" :foreground "#262626" :underline "#99CCFF")))))
+ '(company-tooltip-common-selection ((t (:background "#99CCFF" :foreground "#262626" :underline "#99CCFF"))))
+ '(default ((((class color) (min-colors 257)) (:foreground "#F8F8F2" :background "#262626")) (((class color) (min-colors 89)) (:foreground "#F5F5F5" :background "#1B1E1C")))))
 
 (provide-theme 'Witchmacs)
