@@ -60,11 +60,20 @@ customized to your own liking!
 #+END_SRC
 * Use-package section
 ** Initialize spaceline
+*** Description
+I tried spaceline and didn't like it. What I did like
+was its theme
+*** Code
 #+BEGIN_SRC emacs-lisp
 (use-package spaceline
   :ensure t)
 #+END_SRC
 ** Initialize powerline and utilize the spaceline theme
+*** Description
+I prefer powerline over spaceline, but the default powerline
+themes don't work for me for whatever reason, so I use the
+spaceline theme
+*** Code
 #+BEGIN_SRC emacs-lisp
 (use-package powerline
   :ensure t
@@ -73,6 +82,10 @@ customized to your own liking!
 (add-hook 'after-init-hook 'powerline-reset)
 #+END_SRC
 ** Initialize dashboard
+*** Description
+The frontend of Witchmacs; without this there'd be no Marisa
+in your Emacs startup screen
+*** Code
 #+BEGIN_SRC emacs-lisp
 (use-package dashboard
   :ensure t
@@ -85,7 +98,10 @@ customized to your own liking!
   (setq dashboard-show-shortcuts nil))
 #+END_SRC
 ** Initialize which-key
-Incredibly useful package; press tab to see possible command completions
+*** Description
+Incredibly useful package; press tab to see possible command
+completions
+*** Code
 #+BEGIN_SRC emacs-lisp
 (use-package which-key
   :ensure t
@@ -93,8 +109,11 @@ Incredibly useful package; press tab to see possible command completions
   (which-key-mode))
 #+END_SRC
 ** Initialize evil mode
-Vim keybindings in Emacs. Please note that Witchmacs has NO other
-evil-mode compatibility packages because I like to KISS
+*** Description
+Vim keybindings in Emacs. Please note that Witchmacs has NO
+other evil-mode compatibility packages because I like to
+KISS. This might change in the future
+*** Code
 #+BEGIN_SRC emacs-lisp
 (use-package evil
   :ensure t
@@ -102,8 +121,10 @@ evil-mode compatibility packages because I like to KISS
   (evil-mode 1))
 #+END_SRC
 ** Initialize beacon
-You might find beacon an unnecesary package but I find it very neat.
-It briefly highlights the cursor position when switching
+*** Description
+You might find beacon an unnecesary package but I find it very
+neat. It briefly highlights the cursor position when switching
+*** Code
 #+BEGIN_SRC emacs-lisp
 (use-package beacon
   :ensure t
@@ -111,9 +132,11 @@ It briefly highlights the cursor position when switching
   (beacon-mode 1))
 #+END_SRC
 ** Initialize avy
+*** Description
 Avy is a very useful package; instead of having to move your 
 cursor to a line that is very far away, just do M - s and 
 type the character that you want to move to
+*** Code
 #+BEGIN_SRC emacs-lisp
 (use-package avy
   :ensure t
@@ -121,10 +144,12 @@ type the character that you want to move to
   ("M-s" . avy-goto-char))
 #+END_SRC
 ** Initialize switch-window
+*** Description
 Switch window is a neat package because instead of having to
-painstakingly do C - x o until you're in the window you want to edit,
-you can just do Cc - o and pick the one you want to move to according
-to the letter it is assigned to
+painstakingly do C - x o until you're in the window you want 
+to edit, you can just do C - x o and pick the one you want to
+move to according to the letter it is assigned to
+*** Code
 #+BEGIN_SRC emacs-lisp
 (use-package switch-window
   :ensure t
@@ -139,8 +164,11 @@ to the letter it is assigned to
   ([remap other-window] . switch-window))
 #+END_SRC
 ** Initialize yasnippet and snippets for C and C++ mode
+*** Description
+Enable autocompletion for C and C++ mode.
 Currently I have this set up for C and C++ mode only but
 this might change in the future if there is enough interest
+*** Code
 #+BEGIN_SRC emacs-lisp
 (use-package yasnippet
   :ensure t
@@ -182,9 +210,11 @@ this might change in the future if there is enough interest
   (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
 #+END_SRC
 ** Initialize diminish
+*** Description
 Diminish is at the bottom here because it needs to load after ALL other
 packages have loaded, otherwise it doesn't work (or does it? if you know
 how to make it work when not at the very bottom, please let me know!)
+*** Code
 #+BEGIN_SRC emacs-lisp
 (use-package diminish
   :ensure t
