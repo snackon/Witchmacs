@@ -1,0 +1,200 @@
+* Introduction
+Witchmacs is a very simple and basic configuration file for Emacs. From here you can edit, remove,
+or add many aspects of Emacs you want. I encourage you to do so, because Emacs works best when it's
+customized to your own liking!
+* QoL section
+** Enable line numbers
+#+BEGIN_SRC emacs-lisp
+(global-linum-mode t)
+#+END_SRC
+** Enable parenthesis matching
+#+BEGIN_SRC emacs-lisp
+(show-paren-mode 1)
+#+END_SRC
+** Disable the default startup screen
+#+BEGIN_SRC emacs-lisp
+(setq inhibit-startup-message t)
+#+END_SRC
+** Disable most gui elements
+#+BEGIN_SRC emacs-lisp
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+(scroll-bar-mode -1)
+#+END_SRC
+** Enable copypasting outside of Emacs
+#+BEGIN_SRC emacs-lisp
+(setq x-select-enable-clipboard t)
+#+END_SRC
+** Disable automatic creation of backup files
+#+BEGIN_SRC emacs-lisp
+(setq make-backup-files nil)
+(setq auto-save-default nil)
+#+END_SRC
+** Enable conservative scrolling
+#+BEGIN_SRC emacs-lisp
+(setq scroll-conservatively 100)
+#+END_SRC
+** Disable ring-bell
+#+BEGIN_SRC emacs-lisp
+(setq ring-bell-function 'ignore)
+#+END_SRC
+** Set standard indent and tab size to 4
+#+BEGIN_SRC emacs-lisp
+(setq-default standard-indent 4)
+(setq-default tab-width 4)
+(setq c-basic-offset tab-width)
+#+END_SRC
+** Enable prettify symbols mode
+#+BEGIN_SRC emacs-lisp
+(global-prettify-symbols-mode )
+#+END_SRC
+** Enable bracket pair-matching
+#+BEGIN_SRC emacs-lisp
+(setq electric-pair-pairs '(
+                           (?\{ . ?\})
+                           (?\( . ?\))
+                           (?\[ . ?\])
+                           (?\" . ?\")
+                          ))
+(electric-pair-mode t)
+#+END_SRC
+* Use-package section
+** Initialize spaceline
+#+BEGIN_SRC emacs-lisp
+(use-package spaceline
+  :ensure t)
+#+END_SRC
+** Initialize powerline and utilize the spaceline theme
+#+BEGIN_SRC emacs-lisp
+(use-package powerline
+  :ensure t
+  :init
+  (spaceline-spacemacs-theme))
+(add-hook 'after-init-hook 'powerline-reset)
+#+END_SRC
+** Initialize dashboard
+#+BEGIN_SRC emacs-lisp
+(use-package dashboard
+  :ensure t
+  :config
+  (dashboard-setup-startup-hook)
+  (setq dashboard-items '((recents . 5)))
+  (setq dashboard-banner-logo-title "W I T C H M A C S - The cutest Emacs distribution!")
+  (setq dashboard-startup-banner "~/.emacs.d/marivector.png")
+  (setq dashboard-center-content t)
+  (setq dashboard-show-shortcuts nil))
+#+END_SRC
+** Initialize which-key
+Incredibly useful package; press tab to see possible command completions
+#+BEGIN_SRC emacs-lisp
+(use-package which-key
+  :ensure t
+  :init
+  (which-key-mode))
+#+END_SRC
+** Initialize evil mode
+Vim keybindings in Emacs. Please note that Witchmacs has NO other
+evil-mode compatibility packages because I like to KISS
+#+BEGIN_SRC emacs-lisp
+(use-package evil
+  :ensure t
+  :init
+  (evil-mode 1))
+#+END_SRC
+** Initialize beacon
+You might find beacon an unnecesary package but I find it very neat.
+It briefly highlights the cursor position when switching
+#+BEGIN_SRC emacs-lisp
+(use-package beacon
+  :ensure t
+  :init
+  (beacon-mode 1))
+#+END_SRC
+** Initialize avy
+Avy is a very useful package; instead of having to move your 
+cursor to a line that is very far away, just do M - s and 
+type the character that you want to move to
+#+BEGIN_SRC emacs-lisp
+(use-package avy
+  :ensure t
+  :bind
+  ("M-s" . avy-goto-char))
+#+END_SRC
+** Initialize switch-window
+Switch window is a neat package because instead of having to
+painstakingly do C - x o until you're in the window you want to edit,
+you can just do Cc - o and pick the one you want to move to according
+to the letter it is assigned to
+#+BEGIN_SRC emacs-lisp
+(use-package switch-window
+  :ensure t
+  :config
+  (setq switch-window-input-style 'minibuffer)
+  (setq switch-window-increase 4)
+  (setq switch-window-threshold 2)
+  (setq switch-window-shortcut-style 'qwerty)
+  (setq switch-window-qwerty-shortcuts
+        '("a" "s" "d" "f" "j" "k" "l"))
+  :bind
+  ([remap other-window] . switch-window))
+#+END_SRC
+** Initialize yasnippet and snippets for C and C++ mode
+Currently I have this set up for C and C++ mode only but
+this might change in the future if there is enough interest
+#+BEGIN_SRC emacs-lisp
+(use-package yasnippet
+  :ensure t
+  :config
+    (use-package yasnippet-snippets
+      :ensure t)
+    (yas-reload-all))
+ 
+(use-package company
+  :ensure t
+  :config
+  (setq company-idle-delay 0)
+  (setq company-minimum-prefix-length 3)
+  (define-key company-active-map (kbd "M-n") nil)
+  (define-key company-active-map (kbd "M-p") nil)
+  (define-key company-active-map (kbd "C-n") #'company-select-next)
+  (define-key company-active-map (kbd "C-p") #'company-select-previous)
+  (define-key company-active-map (kbd "SPC") #'company-abort)
+  :hook ((c-mode c++-mode) . company-mode))
+
+(add-hook 'c++-mode-hook 'yas-minor-mode)
+(add-hook 'c-mode-hook 'yas-minor-mode)
+
+(use-package company-c-headers
+  :ensure t)
+ 
+(use-package company-irony
+  :ensure t
+  :config
+  (setq company-backends '((company-c-headers
+                            company-dabbrev-code
+                            company-irony))))
+ 
+(use-package irony
+  :ensure t
+  :config
+  (add-hook 'c++-mode-hook 'irony-mode)
+  (add-hook 'c-mode-hook 'irony-mode)
+  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
+#+END_SRC
+** Initialize diminish
+Diminish is at the bottom here because it needs to load after ALL other
+packages have loaded, otherwise it doesn't work (or does it? if you know
+how to make it work when not at the very bottom, please let me know!)
+#+BEGIN_SRC emacs-lisp
+(use-package diminish
+  :ensure t
+  :init
+  (diminish 'beacon-mode)
+  (diminish 'which-key-mode)
+  (diminish 'page-break-lines-mode)
+  (diminish 'undo-tree-mode)
+  (diminish 'eldoc-mode)
+  (diminish 'abbrev-mode)
+  (diminish 'irony-mode)
+  (diminish 'company-mode))
+#+END_SRC
