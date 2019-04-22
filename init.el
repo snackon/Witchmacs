@@ -221,23 +221,3 @@
   (diminish 'irony-mode)
   (diminish 'company-mode))
 ;;
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ansi-color-names-vector
-   ["#262626" "#FF6666" "#A6E22E" "#FFFF66" "#6666FF" "#FD5FF0" "#99CCFF" "#F1EFEE"])
- '(custom-safe-themes
-   (quote
-	("394afdd6db1af4d1700818169f86eb30371d2e1b1c0a50d3a43aacebbf51d8d1" "3bc2d63cb722b2d77253bd53fbcc7a623e8b0bc520360ed96c9f15601970e0eb" "c04e36d05947668d8fdbe8b70519a2ba16ba5f602b7c33e2310e73d6db7bba4d" "c848ec9e9fb046a705929184c659d4b543ffa1e65da6940c79d3543857b637be" "ad289d381653bbba376bd00be0dbb75b30eb0481a9ddd70b9e914a6e2f84c59a" "d8fb259adc030f414653ff1cec02f362c0894cb0a2688d34567af4b1c35d3095" "bd7b7c5df1174796deefce5debc2d976b264585d51852c962362be83932873d9" "aa7a18c1dfb8a1c71b32e1a8b1ab05c6010037adf96f4b865143df03fe8f24a5" "2bfe756008dd09f5ba994db79d52796d3c3a322b96afa216e4a2456950397d08" "328bc39b8cd28c0712e22e3bf175b032d880e6897ab825b946e3493111976e71" "7465975d8e22260a4203476211f7b77b372a007c17118cf515df87cab4406b27" "20b63c6e0340a4665fff5e15c3d4d12263b7c80f6af6bbc80f3872e5c6db053b" "d91c3b2d66a53a8d0cce0ed5a8ab44c987e2619d4419199f5c995a536f0fc2d8" "c79c9fc2223555d4f80da015609961ec08c605e56a7a32ac40728b5e064bfc88" "0698b2709dd4e990f62d67355999d4aa97e997fe2a0df6c14d6fd80b0ddab09f" default)))
- '(package-selected-packages
-   (quote
-	(monokai-theme company-irony company-c-headers company yasnippet-snippets yasnippet switch-window avy beacon evil which-key dashboard spaceline use-package))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "#262626" :foreground "#F8F8F2" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 97 :width normal :foundry "unknown" :family "Iosevka")))))
