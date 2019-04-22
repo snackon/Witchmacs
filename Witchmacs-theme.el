@@ -1,5 +1,5 @@
 (deftheme Witchmacs
-  "Created 2019-04-21.")
+  "Created 2019-04-22.")
 
 (custom-theme-set-variables
  'Witchmacs
@@ -87,16 +87,6 @@
  '(undo-tree-visualizer-current-face ((t (:foreground "#99CCFF" :inverse-video t))))
  '(undo-tree-visualizer-active-branch-face ((((class color) (min-colors 257)) (:foreground "#F8F8F0" :background "#262626" :weight bold)) (((class color) (min-colors 89)) (:foreground "#FFFAFA" :background "#1B1E1C" :weight bold))))
  '(undo-tree-visualizer-register-face ((((class color) (min-colors 257)) (:foreground "#E6DB74")) (((class color) (min-colors 89)) (:foreground "#CDC673"))))
- '(whitespace-space ((((class color) (min-colors 257)) (:background unspecified :foreground "#75715E" :inverse-video unspecified :slant italic)) (((class color) (min-colors 89)) (:background unspecified :foreground "#8B8878" :inverse-video unspecified :slant italic))))
- '(whitespace-hspace ((((class color) (min-colors 257)) (:background unspecified :foreground "#F8F8F0" :inverse-video unspecified)) (((class color) (min-colors 89)) (:background unspecified :foreground "#FFFAFA" :inverse-video unspecified))))
- '(whitespace-tab ((((class color) (min-colors 257)) (:background unspecified :foreground "#F92672" :inverse-video unspecified :weight bold)) (((class color) (min-colors 89)) (:background unspecified :foreground "#FF1493" :inverse-video unspecified :weight bold))))
- '(whitespace-newline ((((class color) (min-colors 257)) (:background unspecified :foreground "#75715E" :inverse-video unspecified)) (((class color) (min-colors 89)) (:background unspecified :foreground "#8B8878" :inverse-video unspecified))))
- '(whitespace-trailing ((((class color) (min-colors 257)) (:background unspecified :foreground "#A75B00" :inverse-video t)) (((class color) (min-colors 89)) (:background unspecified :foreground "#FFAF5F" :inverse-video t))))
- '(whitespace-line ((((class color) (min-colors 257)) (:background unspecified :foreground "#FD5FF0" :inverse-video unspecified)) (((class color) (min-colors 89)) (:background unspecified :foreground "#D700D7" :inverse-video unspecified))))
- '(whitespace-space-before-tab ((((class color) (min-colors 257)) (:background "#F20055" :foreground unspecified :inverse-video unspecified)) (((class color) (min-colors 89)) (:background "#FF5F87" :foreground unspecified :inverse-video unspecified))))
- '(whitespace-indentation ((((class color) (min-colors 257)) (:background unspecified :foreground "#E6DB74" :inverse-video unspecified :weight bold)) (((class color) (min-colors 89)) (:background unspecified :foreground "#CDC673" :inverse-video unspecified :weight bold))))
- '(whitespace-empty ((((class color) (min-colors 257)) (:background unspecified :foreground "#F20055" :inverse-video t)) (((class color) (min-colors 89)) (:background unspecified :foreground "#FF5F87" :inverse-video t))))
- '(whitespace-space-after-tab ((((class color) (min-colors 257)) (:background unspecified :foreground "#FD971F" :inverse-video t :weight bold)) (((class color) (min-colors 89)) (:background unspecified :foreground "#FF8C00" :inverse-video t :weight bold))))
  '(which-key-key-face ((t (:foreground "#E6DB74" :weight bold))))
  '(which-key-separator-face ((((class color) (min-colors 257)) (:foreground "#75715E")) (((class color) (min-colors 89)) (:foreground "#8B8878"))))
  '(which-key-note-face ((t (:foreground "#75715E"))))
@@ -105,7 +95,7 @@
  '(which-key-group-description-face ((((class color) (min-colors 257)) (:foreground "#F92672" :weight bold)) (((class color) (min-colors 89)) (:foreground "#FF1493" :weight bold))))
  '(dashboard-text-banner ((t (:foreground "#E6DB74"))))
  '(dashboard-heading ((t (:foreground "#E6DB74"))))
- '(spaceline-highlight-face ((t (:background "#492A29" :foreground "#F8F8F2"))))
+ '(spaceline-highlight-face ((t (:background "#412094" :foreground "#F8F8F2"))))
  '(link ((t (:foreground "#99CCFF" :underline t))))
  '(company-preview-common ((t (:foreground "#99CCFF" :underline t))))
  '(company-tooltip-common-selection ((t (:background "#99CCFF" :foreground "#262626" :underline "#99CCFF"))))
