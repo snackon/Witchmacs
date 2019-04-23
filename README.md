@@ -14,6 +14,8 @@ Currently, the appeal of Witchmacs is seeing a cute Marisa picture everytime you
 # Quick install
 `git clone https://github.com/snackon/Witchmacs ~/.emacs.d`
 
+After running this command, the first time you run Emacs will download all of the specified packages in the config.org file, so please be patient!
+
 # Dependencies
 `clang` as backend for C and C++ snippets
 
