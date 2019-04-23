@@ -33,14 +33,3 @@
 
 ;; Load config.org for init.el configuration
 (org-babel-load-file (expand-file-name "~/.emacs.d/config.org"))
-
-;; Diminish the following modes
-(diminish-built-in
-  beacon-mode
-  which-key-mode
-  page-break-lines-mode
-  undo-tree-mode
-  eldoc-mode
-  abbrev-mode
-  irony-mode
-  company-mode)

@@ -61,26 +61,56 @@ customized to your own liking!
 * Use-package section
 ** Initialize diminish
 *** Description
-Diminish is at the bottom here because it needs to load after ALL other
-packages have loaded, otherwise it doesn't work (or does it? if you know
-how to make it work when not at the very bottom, please let me know!)
-EDIT: As of 22-04-2019, thanks to the macro provided by user [[https://github.com/ld34][id34]], diminish
-can work by being up here!
+Diminish hides minor modes in the modeline to prevent
+cluttering it.
 *** Code
 #+BEGIN_SRC emacs-lisp
 (use-package diminish
-  :ensure t)
-
-(defmacro diminish-built-in (&rest modes)
-  "Accepts a list MODES of built-in emacs modes and generates `with-eval-after-load` diminish forms based on the file implementing the mode functionality for each mode."
-  (declare (indent defun))
-  (let* ((get-file-names (lambda (pkg) (file-name-base (symbol-file pkg))))
-	 (diminish-files (mapcar get-file-names modes))
-	 (zip-diminish   (-zip modes diminish-files)))
-    `(progn
-       ,@(cl-loop for (mode . file) in zip-diminish
-		  collect `(with-eval-after-load ,file
-			     (diminish (quote ,mode)))))))
+  :ensure t
+  :after (:all 
+  beacon
+  which-key
+  page-break-lines
+  undo-tree
+  eldoc
+  abbrev
+  irony
+  company)
+  :config
+  (diminish 'beacon-mode)
+  (diminish 'which-key-mode)
+  (diminish 'page-break-lines-mode)
+  (diminish 'undo-tree-mode)
+  (diminish 'eldoc-mode)
+  (diminish 'abbrev-mode)
+  (diminish 'irony-mode)
+  (diminish 'company-mode))
+#+END_SRC
+*** Historical
+This macro was provided by user [[https://gist.github.com/ld34/44d100b79964407e5ddf41035e3cd32f][ld43]] on 22-04-2019 after
+I couldn't figure out how to make diminish work by being
+at the top of the config file
+#+BEGIN_SRC emacs-lisp
+;(defmacro diminish-built-in (&rest modes)
+;  "Accepts a list MODES of built-in emacs modes and generates `with-eval-after-load` diminish forms based on the file implementing the mode functionality for each mode."
+;  (declare (indent defun))
+;  (let* ((get-file-names (lambda (pkg) (file-name-base (symbol-file pkg))))
+;	 (diminish-files (mapcar get-file-names modes))
+;	 (zip-diminish   (-zip modes diminish-files)))
+;    `(progn
+;       ,@(cl-loop for (mode . file) in zip-diminish
+;		  collect `(with-eval-after-load ,file
+;			     (diminish (quote ,mode)))))))
+; This bit goes in init.el
+;(diminish-built-in
+;  beacon-mode
+;  which-key-mode
+;  page-break-lines-mode
+;  undo-tree-mode
+;  eldoc-mode
+;  abbrev-mode
+;  irony-mode
+;  company-mode)
 #+END_SRC
 ** Initialize spaceline
 *** Description
