@@ -5,7 +5,7 @@ customized to your own liking!
 * QoL section
 ** Enable line numbers
 #+BEGIN_SRC emacs-lisp
-(global-linum-mode t)
+(global-linum-mode 1)
 #+END_SRC
 ** Enable parenthesis matching
 #+BEGIN_SRC emacs-lisp
@@ -59,6 +59,29 @@ customized to your own liking!
 (electric-pair-mode t)
 #+END_SRC
 * Use-package section
+** Initialize diminish
+*** Description
+Diminish is at the bottom here because it needs to load after ALL other
+packages have loaded, otherwise it doesn't work (or does it? if you know
+how to make it work when not at the very bottom, please let me know!)
+EDIT: As of 22-04-2019, thanks to the macro provided by user [[https://github.com/ld34][id34]], diminish
+can work by being up here!
+*** Code
+#+BEGIN_SRC emacs-lisp
+(use-package diminish
+  :ensure t)
+
+(defmacro diminish-built-in (&rest modes)
+  "Accepts a list MODES of built-in emacs modes and generates `with-eval-after-load` diminish forms based on the file implementing the mode functionality for each mode."
+  (declare (indent defun))
+  (let* ((get-file-names (lambda (pkg) (file-name-base (symbol-file pkg))))
+	 (diminish-files (mapcar get-file-names modes))
+	 (zip-diminish   (-zip modes diminish-files)))
+    `(progn
+       ,@(cl-loop for (mode . file) in zip-diminish
+		  collect `(with-eval-after-load ,file
+			     (diminish (quote ,mode)))))))
+#+END_SRC
 ** Initialize spaceline
 *** Description
 I tried spaceline and didn't like it. What I did like
@@ -208,23 +231,4 @@ this might change in the future if there is enough interest
   (add-hook 'c++-mode-hook 'irony-mode)
   (add-hook 'c-mode-hook 'irony-mode)
   (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
-#+END_SRC
-** Initialize diminish
-*** Description
-Diminish is at the bottom here because it needs to load after ALL other
-packages have loaded, otherwise it doesn't work (or does it? if you know
-how to make it work when not at the very bottom, please let me know!)
-*** Code
-#+BEGIN_SRC emacs-lisp
-(use-package diminish
-  :ensure t
-  :init
-  (diminish 'beacon-mode)
-  (diminish 'which-key-mode)
-  (diminish 'page-break-lines-mode)
-  (diminish 'undo-tree-mode)
-  (diminish 'eldoc-mode)
-  (diminish 'abbrev-mode)
-  (diminish 'irony-mode)
-  (diminish 'company-mode))
 #+END_SRC
