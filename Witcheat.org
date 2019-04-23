@@ -1,1 +1,24 @@
-The Witchmacs cheatsheet is a work in progress!
+* First things first!
+
+The first thing you might want to do as soon as you install
+Witchmacs is to change your font. To do this, do the following:
+
+>M-x customize-face
+
+>Customize face (default 'all faces'): default
+
+Where M-x means press "Meta x" where meta is, usually, left alt.
+Then type "customize-face" without the quotes and press <RET> (enter).
+You'll get a little prompt at the bottom that says "Customize face
+(default 'all faces'):". Type in "default" and press <RET>. Your
+current active buffer will change to the *Customize Face: Default*
+buffer and give you this nice gui screen where you can change your
+font. In the field right after "Font Family" type in the name
+of the font you want to use in Witchmacs. After you're done, do:
+
+>C-x k
+
+><RET>
+
+To kill the customization screen.
+Witchmacs cheatsheet is a work in progress!
