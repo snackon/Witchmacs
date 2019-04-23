@@ -1,5 +1,5 @@
 (deftheme Witchmacs
-  "Created 2019-04-22.")
+  "Created 2019-04-23.")
 
 (custom-theme-set-variables
  'Witchmacs
@@ -65,7 +65,7 @@
  '(custom-comment-tag ((((class color) (min-colors 257)) (:foreground "#75715E")) (((class color) (min-colors 89)) (:foreground "#8B8878"))))
  '(custom-group-tag ((((class color) (min-colors 257)) (:inherit default :foreground "#66D9EF" :height 1.2)) (((class color) (min-colors 89)) (:inherit default :foreground "#5FD7FF" :height 1.2))))
  '(custom-group-tag-1 ((((class color) (min-colors 257)) (:inherit default :foreground "#F92672" :height 1.2)) (((class color) (min-colors 89)) (:inherit default :foreground "#FF1493" :height 1.2))))
- '(custom-state ((((class color) (min-colors 257)) (:foreground "#A6E22E")) (((class color) (min-colors 89)) (:foreground "#87D700"))))
+ '(custom-state ((t (:foreground "#A6E22E"))))
  '(evil-ex-substitute-matches ((((class color) (min-colors 257)) (:background "#3C3D37" :foreground "#FA518D" :inherit italic)) (((class color) (min-colors 89)) (:background "#000000" :foreground "#FF5F87" :inherit italic))))
  '(evil-ex-substitute-replacement ((((class color) (min-colors 257)) (:background "#3C3D37" :foreground "#BBEF53" :inherit italic)) (((class color) (min-colors 89)) (:background "#000000" :foreground "#AFD700" :inherit italic))))
  '(flyspell-duplicate ((((supports :underline (:style wave)) (class color) (min-colors 257)) (:underline (:style wave :color "#E6DB74") :inherit unspecified)) (((class color) (min-colors 257)) (:foreground "#E6DB74" :weight bold :underline t)) (((supports :underline (:style wave)) (class color) (min-colors 89)) (:underline (:style wave :color "#CDC673") :inherit unspecified)) (((class color) (min-colors 89)) (:foreground "#CDC673" :weight bold :underline t))))
@@ -99,6 +99,9 @@
  '(link ((t (:foreground "#99CCFF" :underline t))))
  '(company-preview-common ((t (:foreground "#99CCFF" :underline t))))
  '(company-tooltip-common-selection ((t (:background "#99CCFF" :foreground "#262626" :underline "#99CCFF"))))
- '(default ((((class color) (min-colors 257)) (:foreground "#F8F8F2" :background "#262626")) (((class color) (min-colors 89)) (:foreground "#F5F5F5" :background "#1B1E1C")))))
+ '(default ((t (:background "#262626" :foreground "#F8F8F2"))))
+ '(ido-subdir ((t (:foreground "#FF6666"))))
+ '(ido-only-match ((t (:foreground "#A6E22E"))))
+ '(ido-indicator ((t (:background "#FF6666" :foreground "#E6DB74" :width condensed)))))
 
 (provide-theme 'Witchmacs)

@@ -177,6 +177,7 @@ KISS. This might change in the future
 *** Description
 You might find beacon an unnecesary package but I find it very
 neat. It briefly highlights the cursor position when switching
+to a new window or buffer
 *** Code
 #+BEGIN_SRC emacs-lisp
 (use-package beacon
@@ -215,6 +216,29 @@ move to according to the letter it is assigned to
         '("a" "s" "d" "f" "j" "k" "l"))
   :bind
   ([remap other-window] . switch-window))
+#+END_SRC
+** Initialize ido and ido-vertical
+*** Description
+For the longest time I used the default way of switching and
+killing buffers in Emacs. Same for finding files. Ido-mode
+made these three tasks IMMENSELY easier and more intuitive.
+Please not that I still use the default way M - x works because
+I believe all you really need for it is which-key
+*** Code
+#+BEGIN_SRC emacs-lisp
+  (setq ido-enable-flex-matching nil)
+  (setq ido-create-new-buffer 'always)
+  (setq ido-everywhere t)
+  (ido-mode 1)
+
+  (use-package ido-vertical-mode
+	:ensure t
+	:init
+	(ido-vertical-mode 1))
+  ; This enables arrow keys to select while in ido mode. If you want to
+  ; instead use the default Emacs keybindings, change it to
+  ; "'C-n-and-C-p-only"
+  (setq ido-vertical-define-keys 'C-n-C-p-up-and-down)
 #+END_SRC
 ** Initialize yasnippet and snippets for C and C++ mode
 *** Description
