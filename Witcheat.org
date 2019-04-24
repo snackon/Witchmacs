@@ -1,5 +1,4 @@
 * First things first!
-
 The first thing you might want to do as soon as you install
 Witchmacs is to change your font. To do this, do the following:
 
@@ -8,20 +7,113 @@ M-x customize-face
 Customize face (default 'all faces'): default
 #+END_EXAMPLE
 
-Where M-x means press "Meta x" where meta is, usually, left alt.
+Where M-x means "press meta x" where meta is, usually, left alt.
 Then type "customize-face" without the quotes and press <RET> (enter).
 You'll get a little prompt at the bottom that says "Customize face
 (default 'all faces'):". Type in "default" and press <RET>. Your
 current active buffer will change to the *Customize Face: Default*
 buffer and give you this nice gui screen where you can change your
-font. In the field right after "Font Family" type in the name
-of the font you want to use in Witchmacs. After you're done, do:
+font. Please note that the default editing mode of *Customize Face:
+Default* is Emacs', and you cannot use Vim keys there so please use
+the arrow keys for movement. I promise that'll be the first and last
+time we use the arrow keys!
+
+In the field right after "Font Family" type in the name of the font
+you want to use then place your cursor over the "Apply and Save"
+button and press <RET>. Your changes will be saved and take place
+immediately. After you've done that, do:
 
 #+BEGIN_EXAMPLE
 C-x k
 <RET>
 #+END_EXAMPLE
 
-To kill the customization screen.
+To kill the customization screen and return to the previous buffer.
+
+* Getting familiar with Emacs keybinds
+** Let's be idorts!
+When the time comes to discuss which keybinds are superior, Emacs' or
+Vim's, there is never a definitive answer. Some people like Emacs'
+keybinds and some people like Vim's keybinds. Some people even go as
+far as to make their own keybinds! I like to adopt the middle ground
+on this issue and use both, Emacs AND Vim keybinds, where each would
+outshine the other.
+
+For example, for moving within a file I use Vim's keybinds:
+
+#+BEGIN_EXAMPLE
+h to move left
+j to move down
+k to move up
+l to move right
+w to go forward a word
+b to go backwards a word
+gg to go to the top of the file
+G to go to the bottom of the file
+#+END_EXAMPLE
+
+These are the most common and basic keybinds I use for moving within a
+file. I never bothered - and never will - to learn Emacs' movement keybinds
+because, in all honesty, they're junk. In fact, I never did the Emacs
+tutorial and learned the most useful Emacs keybinds by practice, by using
+them when I needed them. Some of them are these:
+
+#+BEGIN_EXAMPLE
+C-x C-f to find a file
+C-x C-s to save a file
+C-x C-w to specify where to save the file
+C-x C-b to switch buffers
+C-x C-k to kill a buffer
+C-x 2 to split the current window horizontally
+C-x 3 to split the current window vertically
+C-x o to switch windows
+C-x 0 to kill the current window
+C-z to switch between Evil and Emacs mode
+C-g to quit any action
+#+END_EXAMPLE
+
+The last keybind is particularly useful for when you screwed something
+up and don't know how to exit. Sort of like pressing ESC or doing :qa!
+in Vim. 
+
+Often times you'll run into a buffer that by default comes in Emacs mode.
+There is no need to panic when this happens, just do C-z and you'll switch
+back to Evil mode. There is a package that minimizes the amount of times
+a situation like this might happen. It's called [[https://github.com/emacs-evil/evil-collection][evil-collection]] but since
+I don't use it I cannot argue for or against it. This might change in the
+future. But for now, I leave the choice of using this package up to you.
+
+** The power of M-x
+Meta x is a particularly useful Emacs keybind. It manually calls a function
+and does whatever that function does. If that doesn't blow your mind yet,
+it'll do in no time.
+
+I like learning by doing, so let's do some cool stuff with M-x. First, let's
+check out our available package list by calling the list-packages function:
+
+#+BEGIN_EXAMPLE
+M-x list-packages
+<RET>
+#+END_EXAMPLE
+
+This'll open the *Packages* buffer and show us a list of ALL packages that
+are available for installation. Please note that by default Witchmacs enables
+the melpa package repository. If you want to add other package repositories
+please refer to init.el.
+
+Next, let's play Tetris. Do the following command:
+
+#+BEGIN_EXAMPLE
+M-x tetris
+<RET>
+#+END_EXAMPLE
+
+This'll call the Tetris function, which'll open a new buffer with a game of
+Tetris on it. My highscore is 327, try and beat it!
+
+If you ever run into a situation where you don't know what command to use
+M-x with, just press tab and you'll get a HUGE list of possible command
+completions. I learned a LOT about Emacs this way, and so will you!
+
 
 Witchmacs cheatsheet is a work in progress!
