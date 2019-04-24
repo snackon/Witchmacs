@@ -11,6 +11,8 @@ Configuration files for emacs to add a cute Marisa image and a few custom snippe
 
 Currently, the appeal of Witchmacs is seeing a cute Marisa picture everytime you start up Emacs. Also, it is a very basic config which means you can easily add, edit or remove things as you like. You can use this as a building block when making your OWN Emacs config!
 
+As opposed to many other Emacs distributions, Witchmacs has ZERO customization layers which means you can just jump in, look at the config file and start editing away! After all, Emacs works best when it's customized to your own liking!
+
 # Quick install
 `git clone https://github.com/snackon/Witchmacs ~/.emacs.d`
 
@@ -20,7 +22,12 @@ After running this command, the first time you run Emacs will download all of th
 `clang` as backend for C and C++ snippets
 
 # TODO
-* Add and configure some extra packages (org mode, diminish, etc)
-* Make dashboard cooler
-* Make custom Witchmacs theme
-* Clean up/organize init.el
+* Add and configure some extra packages
+* ~~Make dashboard cooler~~
+  * Make dashboard EVEN cooler!
+* ~~Make custom Witchmacs theme~~
+  * Make custom theme for other Marisa color schemes
+  * Maybe add rotating dashboard pictures
+* ~~Clean up/organize init.el~~
+  * Clean up/organize config.org
+* Optimize startup time
