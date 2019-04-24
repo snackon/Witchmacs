@@ -152,7 +152,7 @@ in your Emacs startup screen
 			  (message "Witchmacs is updating!")
 			  (cd dir)
 			  (shell-command "git pull")
-			  (message "Update finished. Restart Emacs to see the changes"))
+			  (message "Update finished. Switch to the messages buffer to see changes and then restart Emacs"))
 		  (message "\"%s\" doesn't exist." dir))))
 
 	(defun create-scratch-buffer ()
@@ -201,8 +201,6 @@ in your Emacs startup screen
 		(dashboard-center-line)
 		(insert "\n")
 
-
-
 		(insert " ")
 		(widget-create 'push-button
 					   :tag "Open scratch buffer"
@@ -235,6 +233,13 @@ in your Emacs startup screen
 	(setq dashboard-show-shortcuts nil))
 	(add-hook 'dashboard-mode-hook #'dashboard-insert-buttons)
 #+END_SRC
+*** Notes
+If you pay close attention to the code in dashboard, you'll 
+notice that it uses custom functions defined under the :preface
+use-package block. I wrote all of those functions by looking
+at other people's Emacs distributions (Mainly [[https://github.com/seagle0128/.emacs.d][Centaur Emacs]])
+and then experimenting and adapting them to Witchmacs. If you
+dig around, you'll find the same things I did - maybe even more!
 ** Initialize which-key
 *** Description
 Incredibly useful package; press tab to see possible command
