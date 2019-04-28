@@ -58,6 +58,22 @@ customized to your own liking!
                           ))
 (electric-pair-mode t)
 #+END_SRC
+** Creating a new window switches your cursor to it
+#+BEGIN_SRC emacs-lisp
+  (defun split-and-follow-horizontally ()
+	(interactive)
+	(split-window-below)
+	(balance-windows)
+	(other-window 1))
+  (global-set-key (kbd "C-x 2") 'split-and-follow-horizontally)
+
+  (defun split-and-follow-vertically ()
+	(interactive)
+	(split-window-right)
+	(balance-windows)
+	(other-window 1))
+  (global-set-key (kbd "C-x 3") 'split-and-follow-vertically)
+#+END_SRC
 * Use-package section
 ** Initialize diminish
 *** Description
@@ -251,6 +267,18 @@ completions
   :init
   (which-key-mode))
 #+END_SRC
+** Initialize swiper
+*** Description
+When doing C-s to search, you get this very nice and neat
+mini-buffer that you can traverse with the arrow keys (or
+C-n and C-p) and then press <RET> to select where you want
+to go
+*** Code
+#+BEGIN_SRC emacs-lisp
+  (use-package swiper
+	:ensure t
+	:bind ("C-s" . 'swiper))
+#+END_SRC
 ** Initialize evil mode
 *** Description
 Vim keybindings in Emacs. Please note that Witchmacs has NO
@@ -331,20 +359,12 @@ I believe all you really need for it is which-key
   ; "'C-n-and-C-p-only"
   (setq ido-vertical-define-keys 'C-n-C-p-up-and-down)
 #+END_SRC
-** Initialize yasnippet and snippets for C and C++ mode
+* Programming section
+** Company
 *** Description
-Enable autocompletion for C and C++ mode.
-Currently I have this set up for C and C++ mode only but
-this might change in the future if there is enough interest
+Company is what handles autocompletion
 *** Code
 #+BEGIN_SRC emacs-lisp
-  (use-package yasnippet
-	:ensure t
-	:config
-	  (use-package yasnippet-snippets
-		:ensure t)
-	  (yas-reload-all))
- 
   (use-package company
 	:ensure t
 	:defer t
@@ -356,21 +376,37 @@ this might change in the future if there is enough interest
 	(define-key company-active-map (kbd "C-n") #'company-select-next)
 	(define-key company-active-map (kbd "C-p") #'company-select-previous)
 	(define-key company-active-map (kbd "SPC") #'company-abort)
-	:hook ((c-mode c++-mode) . company-mode))
-
+	:hook ((python-mode c-mode c++-mode) . company-mode))
+#+END_SRC
+** Initialize yasnippet
+*** Description
+Yasnippet provides snippets to company
+*** Code
+#+BEGIN_SRC emacs-lisp
+  (use-package yasnippet
+	:ensure t
+	:config
+	  (use-package yasnippet-snippets
+		:ensure t)
+	  (yas-reload-all))
   (add-hook 'c++-mode-hook 'yas-minor-mode)
   (add-hook 'c-mode-hook 'yas-minor-mode)
-
+  (add-hook 'python-mode 'yas-minor-mode)
+#+END_SRC
+** C & C++
+*** Description
+Irony is the company backend for C and C++
+*** Code
+#+BEGIN_SRC emacs-lisp
   (use-package company-c-headers
 	:ensure t)
- 
+
   (use-package company-irony
 	:ensure t
 	:config
 	(setq company-backends '((company-c-headers
 							  company-dabbrev-code
 							  company-irony))))
- 
   (use-package irony
 	:ensure t
 	:config
