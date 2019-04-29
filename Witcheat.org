@@ -99,9 +99,14 @@ M-x list-packages
 This'll open the *Packages* buffer and show us a list of ALL packages that
 are available for installation. Please note that by default Witchmacs enables
 the melpa package repository. If you want to add other package repositories
-please refer to init.el.
+please refer to init.el. Be wary, though, that by installing packages through
+list-packages you are actually only doing that: installing them. If you were
+to delete your Emacs installation, reinstall it and slap your config on top of
+it, the packages you downloaded using list-packages wouldn't be there. To 
+avoid this issue I recommend you to do all package-handling through your config
+files. It's a good habit to do so, anyway!
 
-Next, let's play Tetris. Do the following command:
+Next, let's play some Tetris. Do the following command:
 
 #+BEGIN_EXAMPLE
 M-x tetris
@@ -109,11 +114,40 @@ M-x tetris
 #+END_EXAMPLE
 
 This'll call the Tetris function, which'll open a new buffer with a game of
-Tetris on it. My highscore is 327, try and beat it!
+Tetris on it. My highscore is 938, try and beat it!
 
 If you ever run into a situation where you don't know what command to use
 M-x with, just press tab and you'll get a HUGE list of possible command
 completions. I learned a LOT about Emacs this way, and so will you!
+
+* A good theme to go with a good editor
+A common practice of most Emacs distributions is to utilize customization
+layers for everything config-related within itself. There is nothing
+inherently wrong with this, but of course this poses some difficulties
+when you want to configure things to your own liking. I'm lazy and I
+don't like making things complicated, so I decided against it for Witchmacs,
+thus putting all the power of customization in your own hands (this would
+still keep true if all you had done was install Emacs!).
+
+Lets put this power to good use. We'll be editing Witchmacs' theme which
+I based off the popular Emacs theme, Monokai. Do the following command:
+
+#+BEGIN_EXAMPLE
+M-x customize-create-theme
+<RET>
+#+END_EXAMPLE
+
+And then press y. This'll put us into the *Custom-theme* buffer and allow
+us to edit the many possible faces of it. But we don't want to start from
+scratch, screw that! hover over to Visit Theme at the very top, press <RET>
+and type in Witchmacs (it is case-sensitive so the capitalized W is important),
+<RET> once again and y to whatever prompts may appear! This'll load the Witchmacs
+theme in the *Custom-theme* buffer for editing. Whatever is under "Theme
+faces:" are the faces for the Witchmacs theme. From here you can change its
+colors however you like, add whatever faces for whatever packages you might
+use and save them under one neat theme! There really is no limit to what you
+can do with this buffer, all you need to know is the name of the face you want
+to edit and the hex code of the color you want to change it to.
 
 
 Witchmacs cheatsheet is a work in progress!
