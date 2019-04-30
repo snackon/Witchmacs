@@ -362,7 +362,8 @@ I believe all you really need for it is which-key
 * Programming section
 ** Company
 *** Description
-Company is what handles autocompletion
+Company is the autocompletion frontend that takes all the backends
+and gives you possible autocompletions when writing programs
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package company
@@ -380,7 +381,8 @@ Company is what handles autocompletion
 #+END_SRC
 ** Initialize yasnippet
 *** Description
-Yasnippet provides snippets to company
+Yasnippet provides the snippets that company utilizes for possible
+autocompletions
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package yasnippet
@@ -391,7 +393,7 @@ Yasnippet provides snippets to company
 	  (yas-reload-all))
   (add-hook 'c++-mode-hook 'yas-minor-mode)
   (add-hook 'c-mode-hook 'yas-minor-mode)
-  (add-hook 'python-mode 'yas-minor-mode)
+  (add-hook 'python-mode-hook 'yas-minor-mode)
 #+END_SRC
 ** C & C++
 *** Description
@@ -413,4 +415,20 @@ Irony is the company backend for C and C++
 	(add-hook 'c++-mode-hook 'irony-mode)
 	(add-hook 'c-mode-hook 'irony-mode)
 	(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
+#+END_SRC
+** Python
+Company-jedi is the company backed for Python
+*** Description
+#+BEGIN_SRC emacs-lisp
+  (use-package company-jedi
+	:preface
+	(defun python-mode-company-init ()
+	(setq-local company-backends '((company-jedi
+									company-etags
+									company-dabbrev-code))))
+	:ensure t
+	:config
+	(require 'company)
+	(add-to-list 'company-backends 'company-jedi)
+	(add-hook 'python-mode-hook 'python-mode-company-init))
 #+END_SRC
