@@ -5,58 +5,58 @@ customized to your own liking!
 * QoL section
 ** Enable line numbers
 #+BEGIN_SRC emacs-lisp
-(global-linum-mode 1)
+  (global-linum-mode 1)
 #+END_SRC
 ** Enable parenthesis matching
 #+BEGIN_SRC emacs-lisp
-(show-paren-mode 1)
+  (show-paren-mode 1)
 #+END_SRC
 ** Disable the default startup screen
 #+BEGIN_SRC emacs-lisp
-(setq inhibit-startup-message t)
+  (setq inhibit-startup-message t)
 #+END_SRC
 ** Disable most gui elements
 #+BEGIN_SRC emacs-lisp
-(tool-bar-mode -1)
-(menu-bar-mode -1)
-(scroll-bar-mode -1)
+  (tool-bar-mode -1)
+  (menu-bar-mode -1)
+  (scroll-bar-mode -1)
 #+END_SRC
 ** Enable copypasting outside of Emacs
 #+BEGIN_SRC emacs-lisp
-(setq x-select-enable-clipboard t)
+  (setq x-select-enable-clipboard t)
 #+END_SRC
 ** Disable automatic creation of backup files
 #+BEGIN_SRC emacs-lisp
-(setq make-backup-files nil)
-(setq auto-save-default nil)
+  (setq make-backup-files nil)
+  (setq auto-save-default nil)
 #+END_SRC
 ** Enable conservative scrolling
 #+BEGIN_SRC emacs-lisp
-(setq scroll-conservatively 100)
+  (setq scroll-conservatively 100)
 #+END_SRC
 ** Disable ring-bell
 #+BEGIN_SRC emacs-lisp
-(setq ring-bell-function 'ignore)
+  (setq ring-bell-function 'ignore)
 #+END_SRC
 ** Set standard indent and tab size to 4
 #+BEGIN_SRC emacs-lisp
-(setq-default standard-indent 4)
-(setq-default tab-width 4)
-(setq c-basic-offset tab-width)
+  (setq-default standard-indent 4)
+  (setq-default tab-width 4)
+  (setq c-basic-offset tab-width)
 #+END_SRC
 ** Enable prettify symbols mode
 #+BEGIN_SRC emacs-lisp
-(global-prettify-symbols-mode )
+  (global-prettify-symbols-mode )
 #+END_SRC
 ** Enable bracket pair-matching
 #+BEGIN_SRC emacs-lisp
-(setq electric-pair-pairs '(
-                           (?\{ . ?\})
-                           (?\( . ?\))
-                           (?\[ . ?\])
-                           (?\" . ?\")
-                          ))
-(electric-pair-mode t)
+  (setq electric-pair-pairs '(
+							 (?\{ . ?\})
+							 (?\( . ?\))
+							 (?\[ . ?\])
+							 (?\" . ?\")
+							))
+  (electric-pair-mode t)
 #+END_SRC
 ** Creating a new window switches your cursor to it
 #+BEGIN_SRC emacs-lisp
@@ -81,26 +81,26 @@ Diminish hides minor modes in the modeline to prevent
 cluttering it.
 *** Code
 #+BEGIN_SRC emacs-lisp
-(use-package diminish
-  :ensure t
-  :after (:all 
-  beacon
-  which-key
-  page-break-lines
-  undo-tree
-  eldoc
-  abbrev
-  irony
-  company)
-  :config
-  (diminish 'beacon-mode)
-  (diminish 'which-key-mode)
-  (diminish 'page-break-lines-mode)
-  (diminish 'undo-tree-mode)
-  (diminish 'eldoc-mode)
-  (diminish 'abbrev-mode)
-  (diminish 'irony-mode)
-  (diminish 'company-mode))
+  (use-package diminish
+	:ensure t
+	:after (:all 
+	beacon
+	which-key
+	page-break-lines
+	undo-tree
+	eldoc
+	abbrev
+	irony
+	company)
+	:config
+	(diminish 'beacon-mode)
+	(diminish 'which-key-mode)
+	(diminish 'page-break-lines-mode)
+	(diminish 'undo-tree-mode)
+	(diminish 'eldoc-mode)
+	(diminish 'abbrev-mode)
+	(diminish 'irony-mode)
+	(diminish 'company-mode))
 #+END_SRC
 *** Historical
 This macro was provided by user [[https://gist.github.com/ld34/44d100b79964407e5ddf41035e3cd32f][ld43]] on 22-04-2019 after
@@ -134,8 +134,8 @@ I tried spaceline and didn't like it. What I did like
 was its theme
 *** Code
 #+BEGIN_SRC emacs-lisp
-(use-package spaceline
-  :ensure t)
+  (use-package spaceline
+	:ensure t)
 #+END_SRC
 ** Initialize powerline and utilize the spaceline theme
 *** Description
@@ -144,11 +144,11 @@ themes don't work for me for whatever reason, so I use the
 spaceline theme
 *** Code
 #+BEGIN_SRC emacs-lisp
-(use-package powerline
-  :ensure t
-  :init
-  (spaceline-spacemacs-theme))
-(add-hook 'after-init-hook 'powerline-reset)
+  (use-package powerline
+	:ensure t
+	:init
+	(spaceline-spacemacs-theme))
+  (add-hook 'after-init-hook 'powerline-reset)
 #+END_SRC
 ** Initialize dashboard
 *** Description
@@ -262,10 +262,10 @@ Incredibly useful package; press tab to see possible command
 completions
 *** Code
 #+BEGIN_SRC emacs-lisp
-(use-package which-key
-  :ensure t
-  :init
-  (which-key-mode))
+  (use-package which-key
+	:ensure t
+	:init
+	(which-key-mode))
 #+END_SRC
 ** Initialize swiper
 *** Description
@@ -286,10 +286,10 @@ other evil-mode compatibility packages because I like to
 KISS. This might change in the future
 *** Code
 #+BEGIN_SRC emacs-lisp
-(use-package evil
-  :ensure t
-  :init
-  (evil-mode 1))
+  (use-package evil
+	:ensure t
+	:init
+	(evil-mode 1))
 #+END_SRC
 ** Initialize beacon
 *** Description
@@ -298,10 +298,10 @@ neat. It briefly highlights the cursor position when switching
 to a new window or buffer
 *** Code
 #+BEGIN_SRC emacs-lisp
-(use-package beacon
-  :ensure t
-  :init
-  (beacon-mode 1))
+  (use-package beacon
+	:ensure t
+	:init
+	(beacon-mode 1))
 #+END_SRC
 ** Initialize avy
 *** Description
@@ -310,10 +310,10 @@ cursor to a line that is very far away, just do M - s and
 type the character that you want to move to
 *** Code
 #+BEGIN_SRC emacs-lisp
-(use-package avy
-  :ensure t
-  :bind
-  ("M-s" . avy-goto-char))
+  (use-package avy
+	:ensure t
+	:bind
+	("M-s" . avy-goto-char))
 #+END_SRC
 ** Initialize switch-window
 *** Description
@@ -417,8 +417,9 @@ Irony is the company backend for C and C++
 	(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
 #+END_SRC
 ** Python
-Company-jedi is the company backed for Python
 *** Description
+Company-jedi is the company backed for Python
+*** Code
 #+BEGIN_SRC emacs-lisp
   (use-package company-jedi
 	:preface

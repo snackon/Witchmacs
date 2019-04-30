@@ -21,13 +21,17 @@ After running this command, the first time you run Emacs will download all of th
 # Dependencies
 `clang` as backend for C and C++ snippets
 
+## Experimental
+I'm trying out some packages to turn Emacs into a Python IDE. If you don't want to use them, just delete anything Python related from config.org. Otherwise, run the following command in your CLI:
+`pip install jedi flake8 autopep8`
+
 # TODO
 * Add and configure some extra packages
 * ~~Make dashboard cooler~~
   * Make dashboard EVEN cooler!
-* ~~Make custom Witchmacs theme~~
-  * Make custom theme for other Marisa color schemes
   * Maybe add rotating dashboard pictures
+* ~~Make custom Witchmacs theme~~
+  * (Maybe) Make custom theme for other Marisa color schemes
 * ~~Clean up/organize init.el~~
   * Clean up/organize config.org
 * Optimize startup time
