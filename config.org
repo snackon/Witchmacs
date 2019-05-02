@@ -147,8 +147,9 @@ spaceline theme
   (use-package powerline
 	:ensure t
 	:init
-	(spaceline-spacemacs-theme))
-  (add-hook 'after-init-hook 'powerline-reset)
+	(spaceline-spacemacs-theme)
+	:hook
+	('after-init-hook) . 'powerline-reset)
 #+END_SRC
 ** Initialize dashboard
 *** Description
@@ -377,12 +378,13 @@ and gives you possible autocompletions when writing programs
 	(define-key company-active-map (kbd "C-n") #'company-select-next)
 	(define-key company-active-map (kbd "C-p") #'company-select-previous)
 	(define-key company-active-map (kbd "SPC") #'company-abort)
-	:hook ((python-mode c-mode c++-mode) . company-mode))
+	:hook
+	((python-mode c-mode c++-mode) . company-mode))
 #+END_SRC
 ** Initialize yasnippet
 *** Description
-Yasnippet provides the snippets that company utilizes for possible
-autocompletions
+Yasnippet provides useful snippets, nothing to do with Company but
+still useful when used in conjuction with it
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package yasnippet
@@ -390,10 +392,9 @@ autocompletions
 	:config
 	  (use-package yasnippet-snippets
 		:ensure t)
-	  (yas-reload-all))
-  (add-hook 'c++-mode-hook 'yas-minor-mode)
-  (add-hook 'c-mode-hook 'yas-minor-mode)
-  (add-hook 'python-mode-hook 'yas-minor-mode)
+	:hook
+	((python-mode c-mode c++-mode) . 'yas-minor-mode))
+  (yas-reload-all)
 #+END_SRC
 ** C & C++
 *** Description
@@ -412,13 +413,16 @@ Irony is the company backend for C and C++
   (use-package irony
 	:ensure t
 	:config
-	(add-hook 'c++-mode-hook 'irony-mode)
-	(add-hook 'c-mode-hook 'irony-mode)
-	(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
+	:hook
+	(('c++-mode-hook 'c-mode-hook) . 'irony-mode)
+	('irony-mode-hook) . 'irony-cdb-autosetup-compile-options)
 #+END_SRC
 ** Python
 *** Description
-Company-jedi is the company backed for Python
+Company-jedi is the company backend for Python
+
+01/05/2019: For some reason, jedi doesn't work as I expect it to. I'd
+appreciate any help regarding this issue
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package company-jedi
@@ -431,5 +435,6 @@ Company-jedi is the company backed for Python
 	:config
 	(require 'company)
 	(add-to-list 'company-backends 'company-jedi)
-	(add-hook 'python-mode-hook 'python-mode-company-init))
+	:hook
+	(('python-mode-hook) . 'python-mode-company-init))
 #+END_SRC
