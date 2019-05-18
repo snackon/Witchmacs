@@ -4,10 +4,14 @@ or add many aspects of Emacs you want. I encourage you to do so, because Emacs w
 customized to your own liking!
 * QoL section
 ** Enable line numbers
+Emacs breaks certain modes when it has line-numbers-mode enabled,
+(like docview or ansi-term) so I utilize the approach of only
+enabling it on some major modes rather than globally
 #+BEGIN_SRC emacs-lisp
-  (global-linum-mode 1)
+  (add-hook 'prog-mode-hook 'display-line-numbers-mode)
+  (add-hook 'text-mode-hook 'display-line-numbers-mode)
 #+END_SRC
-** Enable parenthesis matching
+** Show parent parentheses
 #+BEGIN_SRC emacs-lisp
   (show-paren-mode 1)
 #+END_SRC
@@ -38,15 +42,18 @@ customized to your own liking!
 #+BEGIN_SRC emacs-lisp
   (setq ring-bell-function 'ignore)
 #+END_SRC
-** Set standard indent and tab size to 4
+** Indentation
 #+BEGIN_SRC emacs-lisp
-  (setq-default standard-indent 4)
   (setq-default tab-width 4)
+  (setq-default standard-indent 4)
   (setq c-basic-offset tab-width)
+  (setq-default electric-indent-inhibit t)
+  (setq-default indent-tabs-mode t)
+  (setq backward-delete-char-untabify-method 'hungry)
 #+END_SRC
 ** Enable prettify symbols mode
 #+BEGIN_SRC emacs-lisp
-  (global-prettify-symbols-mode )
+  (global-prettify-symbols-mode t)
 #+END_SRC
 ** Enable bracket pair-matching
 #+BEGIN_SRC emacs-lisp
@@ -73,6 +80,31 @@ customized to your own liking!
 	(balance-windows)
 	(other-window 1))
   (global-set-key (kbd "C-x 3") 'split-and-follow-vertically)
+#+END_SRC
+** Always use bash when calling ansi-term
+Super - Control - return to open ansi-term on current buffer
+#+BEGIN_SRC emacs-lisp
+  (defvar my-term-shell "/bin/bash")
+  (defadvice ansi-term (before force-bash)
+	(interactive(list my-term-shell)))
+  (ad-activate 'ansi-term)
+  (global-set-key (kbd "<s-C-return>") 'ansi-term)
+#+END_SRC
+** Transform yes-or-no questions into y-or-n
+#+BEGIN_SRC emacs-lisp
+  (defalias 'yes-or-no-p 'y-or-n-p)
+#+END_SRC
+** Easier resize bindigs
+Super - Control - <arrow>
+#+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "s-C-<left>") 'shrink-window-horizontally)
+  (global-set-key (kbd "s-C-<right>") 'enlarge-window-horizontally)
+  (global-set-key (kbd "s-C-<down>") 'shrink-window)
+  (global-set-key (kbd "s-C-<up>") 'enlarge-window)
+#+END_SRC
+** Highlight current line
+#+BEGIN_SRC emacs-lisp
+  (global-hl-line-mode t)
 #+END_SRC
 * Use-package section
 ** Initialize diminish
@@ -290,7 +322,15 @@ KISS. This might change in the future
   (use-package evil
 	:ensure t
 	:init
+	(setq evil-want-keybinding nil)
+	:config
 	(evil-mode 1))
+
+  (use-package evil-collection
+	:after evil
+	:ensure t
+	:config
+	(evil-collection-init))
 #+END_SRC
 ** Initialize beacon
 *** Description
@@ -359,6 +399,16 @@ I believe all you really need for it is which-key
   ; instead use the default Emacs keybindings, change it to
   ; "'C-n-and-C-p-only"
   (setq ido-vertical-define-keys 'C-n-C-p-up-and-down)
+#+END_SRC
+** Initialize async
+*** Description
+Utilize asynchronous processes whenever possible
+*** Code
+#+BEGIN_SRC emacs-lisp
+  (use-package async
+	:ensure t
+	:init
+	(dired-async-mode 1))
 #+END_SRC
 * Programming section
 ** Company
