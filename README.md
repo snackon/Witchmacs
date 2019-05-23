@@ -19,11 +19,8 @@ As opposed to many other Emacs distributions, Witchmacs has ZERO customization l
 After running this command, the first time you run Emacs will download all of the specified packages in the config.org file, so please be patient!
 
 # Dependencies
-`clang` as backend for C and C++ snippets
-
-## Experimental
-I'm trying out some packages to turn Emacs into a Python IDE. If you don't want to use them, just delete anything Python related from config.org. Otherwise, run the following command in your CLI:
-`pip install jedi flake8 autopep8`
+`clang` as backend for C and C++ autocompletion
+`llvm` to install irony server
 
 # TODO
 * Add and configure some extra packages
