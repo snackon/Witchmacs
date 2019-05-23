@@ -1,12 +1,8 @@
 * Introduction
-Witchmacs is a very simple and basic configuration file for Emacs. From here you can edit, remove,
-or add many aspects of Emacs you want. I encourage you to do so, because Emacs works best when it's
-customized to your own liking!
+Witchmacs is a very simple and basic configuration file for Emacs. From here you can edit, remove, or add many aspects of Emacs you want. I encourage you to do so, because Emacs works best when it's customized to your own liking!
 * QoL section
 ** Enable line numbers
-Emacs breaks certain modes when it has line-numbers-mode enabled,
-(like docview or ansi-term) so I utilize the approach of only
-enabling it on some major modes rather than globally
+Emacs breaks certain modes when it has line-numbers-mode enabled, (like docview or ansi-term) so I utilize the approach of only enabling it on some major modes rather than globally
 #+BEGIN_SRC emacs-lisp
   (add-hook 'prog-mode-hook 'display-line-numbers-mode)
   (add-hook 'text-mode-hook 'display-line-numbers-mode)
@@ -49,7 +45,7 @@ enabling it on some major modes rather than globally
   (setq c-basic-offset tab-width)
   (setq-default electric-indent-inhibit t)
   (setq-default indent-tabs-mode t)
-  (setq backward-delete-char-untabify-method 'hungry)
+  (setq backward-delete-char-untabify-method 'nil)
 #+END_SRC
 ** Enable prettify symbols mode
 #+BEGIN_SRC emacs-lisp
@@ -106,36 +102,43 @@ Super - Control - <arrow>
 #+BEGIN_SRC emacs-lisp
   (global-hl-line-mode t)
 #+END_SRC
+** Org mode
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'org-mode-hook 'org-indent-mode)
+  (add-hook 'org-mode-hook
+          '(lambda ()
+             (visual-line-mode 1)))
+#+END_SRC
 * Use-package section
 ** Initialize diminish
 *** Description
-Diminish hides minor modes in the modeline to prevent
-cluttering it.
+Diminish hides minor modes in the modeline to prevent cluttering it.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package diminish
-	:ensure t
-	:after (:all 
-	beacon
-	which-key
-	page-break-lines
-	undo-tree
-	eldoc
-	abbrev
-	irony
-	company)
-	:config
-	(diminish 'beacon-mode)
-	(diminish 'which-key-mode)
-	(diminish 'page-break-lines-mode)
-	(diminish 'undo-tree-mode)
-	(diminish 'eldoc-mode)
-	(diminish 'abbrev-mode)
-	(diminish 'irony-mode)
-	(diminish 'company-mode))
+    :ensure t
+    :after (:all 
+    beacon
+    which-key
+    page-break-lines
+    undo-tree
+    eldoc
+    abbrev
+    irony
+    company)
+    :config
+    (diminish 'beacon-mode)
+    (diminish 'which-key-mode)
+    (diminish 'page-break-lines-mode)
+    (diminish 'undo-tree-mode)
+    (diminish 'eldoc-mode)
+    (diminish 'abbrev-mode)
+    (diminish 'irony-mode)
+    (diminish 'company-mode)
+    (diminish 'visual-line-mode))
 #+END_SRC
 *** Historical
-This macro was provided by user [[https://gist.github.com/ld34/44d100b79964407e5ddf41035e3cd32f][ld43]] on 22-04-2019 after
+22/04/2019: This macro was provided by user [[https://gist.github.com/ld34/44d100b79964407e5ddf41035e3cd32f][ld43]] after
 I couldn't figure out how to make diminish work by being
 at the top of the config file
 #+BEGIN_SRC emacs-lisp
@@ -162,8 +165,7 @@ at the top of the config file
 #+END_SRC
 ** Initialize spaceline
 *** Description
-I tried spaceline and didn't like it. What I did like
-was its theme
+I tried spaceline and didn't like it. What I did like was its theme
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package spaceline
@@ -171,9 +173,7 @@ was its theme
 #+END_SRC
 ** Initialize powerline and utilize the spaceline theme
 *** Description
-I prefer powerline over spaceline, but the default powerline
-themes don't work for me for whatever reason, so I use the
-spaceline theme
+I prefer powerline over spaceline, but the default powerline themes don't work for me for whatever reason, so I use the spaceline theme
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package powerline
@@ -185,8 +185,7 @@ spaceline theme
 #+END_SRC
 ** Initialize dashboard
 *** Description
-The frontend of Witchmacs; without this there'd be no Marisa
-in your Emacs startup screen
+The frontend of Witchmacs; without this there'd be no Marisa in your Emacs startup screen
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package dashboard
@@ -264,14 +263,7 @@ in your Emacs startup screen
 					   "~/.emacs.d/config.org")
 
 		(dashboard-center-line)
-		(insert "\n\n")
 
-		(insert (concat
-				 (propertize (format "%d packages loaded in %s"
-						(length package-activated-list) (emacs-init-time))
-				'face 'font-lock-comment-face)))
-
-		(dashboard-center-line)
 		(read-only-mode 1)))
 	:config
 	(dashboard-setup-startup-hook)
@@ -279,20 +271,25 @@ in your Emacs startup screen
 	(setq dashboard-banner-logo-title "W I T C H M A C S - The cutest Emacs distribution!")
 	(setq dashboard-startup-banner "~/.emacs.d/marivector.png")
 	(setq dashboard-center-content t)
-	(setq dashboard-show-shortcuts nil))
+	(setq dashboard-show-shortcuts nil)
+	(setq dashboard-set-init-info t))
 	(add-hook 'dashboard-mode-hook #'dashboard-insert-buttons)
 #+END_SRC
 *** Notes
-If you pay close attention to the code in dashboard, you'll 
-notice that it uses custom functions defined under the :preface
-use-package block. I wrote all of those functions by looking
-at other people's Emacs distributions (Mainly [[https://github.com/seagle0128/.emacs.d][Centaur Emacs]])
-and then experimenting and adapting them to Witchmacs. If you
-dig around, you'll find the same things I did - maybe even more!
+If you pay close attention to the code in dashboard, you'll  notice that it uses custom functions defined under the :preface use-package block. I wrote all of those functions by looking at other people's Emacs distributions (Mainly [[https://github.com/seagle0128/.emacs.d][Centaur Emacs]]) and then experimenting and adapting them to Witchmacs. If you dig around, you'll find the same things I did - maybe even more!
+*** Historical
+22/05/19: On this day, the main maintainers of the dashboard package have added built-in fuinctionality to display init and package load time, thing that I already had implemented much earlier on my own. I have left here my implementation for historical purposes.
+#+BEGIN_SRC emacs-lisp
+  ;(insert (concat
+  ;         (propertize (format "%d packages loaded in %s"
+  ;                             (length package-activated-list) (emacs-init-time))
+  ;                     'face 'font-lock-comment-face)))
+  ;
+  ;(dashboard-center-line)
+#+END_SRC
 ** Initialize which-key
 *** Description
-Incredibly useful package; press tab to see possible command
-completions
+Incredibly useful package; press tab to see possible command completions
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package which-key
@@ -302,10 +299,7 @@ completions
 #+END_SRC
 ** Initialize swiper
 *** Description
-When doing C-s to search, you get this very nice and neat
-mini-buffer that you can traverse with the arrow keys (or
-C-n and C-p) and then press <RET> to select where you want
-to go
+When doing C-s to search, you get this very nice and neat mini-buffer that you can traverse with the arrow keys (or C-n and C-p) and then press <RET> to select where you want to go
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package swiper
@@ -314,9 +308,7 @@ to go
 #+END_SRC
 ** Initialize evil mode
 *** Description
-Vim keybindings in Emacs. Please note that Witchmacs has NO
-other evil-mode compatibility packages because I like to
-KISS. This might change in the future
+Vim keybindings in Emacs. Please note that Witchmacs has NO other evil-mode compatibility packages because I like to KISS. This might change in the future
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package evil
@@ -334,9 +326,7 @@ KISS. This might change in the future
 #+END_SRC
 ** Initialize beacon
 *** Description
-You might find beacon an unnecesary package but I find it very
-neat. It briefly highlights the cursor position when switching
-to a new window or buffer
+You might find beacon an unnecesary package but I find it very neat. It briefly highlights the cursor position when switching to a new window or buffer
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package beacon
@@ -346,9 +336,7 @@ to a new window or buffer
 #+END_SRC
 ** Initialize avy
 *** Description
-Avy is a very useful package; instead of having to move your 
-cursor to a line that is very far away, just do M - s and 
-type the character that you want to move to
+Avy is a very useful package; instead of having to move your cursor to a line that is very far away, just do M - s and type the character that you want to move to
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package avy
@@ -358,10 +346,7 @@ type the character that you want to move to
 #+END_SRC
 ** Initialize switch-window
 *** Description
-Switch window is a neat package because instead of having to
-painstakingly do C - x o until you're in the window you want 
-to edit, you can just do C - x o and pick the one you want to
-move to according to the letter it is assigned to
+Switch window is a neat package because instead of having to painstakingly do C - x o until you're in the window you want  to edit, you can just do C - x o and pick the one you want to move to according to the letter it is assigned to
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package switch-window
@@ -379,11 +364,7 @@ move to according to the letter it is assigned to
 #+END_SRC
 ** Initialize ido and ido-vertical
 *** Description
-For the longest time I used the default way of switching and
-killing buffers in Emacs. Same for finding files. Ido-mode
-made these three tasks IMMENSELY easier and more intuitive.
-Please not that I still use the default way M - x works because
-I believe all you really need for it is which-key
+For the longest time I used the default way of switching and killing buffers in Emacs. Same for finding files. Ido-mode made these three tasks IMMENSELY easier and more intuitive. Please not that I still use the default way M - x works because I believe all you really need for it is which-key
 *** Code
 #+BEGIN_SRC emacs-lisp
   (setq ido-enable-flex-matching nil)
@@ -413,8 +394,7 @@ Utilize asynchronous processes whenever possible
 * Programming section
 ** Company
 *** Description
-Company is the autocompletion frontend that takes all the backends
-and gives you possible autocompletions when writing programs
+Company is the autocompletion frontend that takes all the backends and gives you possible autocompletions when writing programs
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package company
@@ -429,12 +409,11 @@ and gives you possible autocompletions when writing programs
 	(define-key company-active-map (kbd "C-p") #'company-select-previous)
 	(define-key company-active-map (kbd "SPC") #'company-abort)
 	:hook
-	((python-mode c-mode c++-mode) . company-mode))
+	((c-mode c++-mode) . company-mode))
 #+END_SRC
 ** Initialize yasnippet
 *** Description
-Yasnippet provides useful snippets, nothing to do with Company but
-still useful when used in conjuction with it
+Yasnippet provides useful snippets, nothing to do with Company but still useful when used in conjuction with it
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package yasnippet
@@ -443,7 +422,7 @@ still useful when used in conjuction with it
 	  (use-package yasnippet-snippets
 		:ensure t)
 	:hook
-	((python-mode c-mode c++-mode) . 'yas-minor-mode))
+	((c-mode c++-mode) . 'yas-minor-mode))
   (yas-reload-all)
 #+END_SRC
 ** C & C++
@@ -466,25 +445,4 @@ Irony is the company backend for C and C++
 	:hook
 	(('c++-mode-hook 'c-mode-hook) . 'irony-mode)
 	('irony-mode-hook) . 'irony-cdb-autosetup-compile-options)
-#+END_SRC
-** Python
-*** Description
-Company-jedi is the company backend for Python
-
-01/05/2019: For some reason, jedi doesn't work as I expect it to. I'd
-appreciate any help regarding this issue
-*** Code
-#+BEGIN_SRC emacs-lisp
-  (use-package company-jedi
-	:preface
-	(defun python-mode-company-init ()
-	(setq-local company-backends '((company-jedi
-									company-etags
-									company-dabbrev-code))))
-	:ensure t
-	:config
-	(require 'company)
-	(add-to-list 'company-backends 'company-jedi)
-	:hook
-	(('python-mode-hook) . 'python-mode-company-init))
 #+END_SRC

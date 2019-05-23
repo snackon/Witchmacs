@@ -1,5 +1,5 @@
 (deftheme Witchmacs
-  "Created 2019-05-18.")
+  "Created 2019-05-22.")
 
 (custom-theme-set-variables
  'Witchmacs
@@ -95,7 +95,7 @@
  '(which-key-group-description-face ((((class color) (min-colors 257)) (:foreground "#F92672" :weight bold)) (((class color) (min-colors 89)) (:foreground "#FF1493" :weight bold))))
  '(dashboard-text-banner ((t (:foreground "#E6DB74"))))
  '(dashboard-heading ((t (:foreground "#E6DB74"))))
- '(spaceline-highlight-face ((t (:background "#412094" :foreground "#F8F8F2"))))
+ '(spaceline-highlight-face ((t (:background "#E6DB74" :foreground "#262626"))))
  '(link ((t (:foreground "#99CCFF" :underline t))))
  '(company-preview-common ((t (:foreground "#99CCFF" :underline t))))
  '(company-tooltip-common-selection ((t (:background "#99CCFF" :foreground "#262626" :underline "#99CCFF"))))
@@ -103,14 +103,6 @@
  '(ido-only-match ((t (:foreground "#A6E22E"))))
  '(ido-indicator ((t (:background "#FF6666" :foreground "#E6DB74" :width condensed))))
  '(hl-line ((t (:background "#202020"))))
- '(default ((t (:background "#262626" :foreground "#F8F8F2"))))
- '(term-color-black ((t (:background "#1A1A1A" :foreground "#1A1A1A"))))
- '(term-color-blue ((t (:background "#6666FF" :foreground "#6666FF"))))
- '(term-color-cyan ((t (:background "#99CCFF" :foreground "#99CCFF"))))
- '(term-color-green ((t (:background "#A6E22E" :foreground "#A6E22E"))))
- '(term-color-magenta ((t (:background "#FF66FF" :foreground "#FF66FF"))))
- '(term-color-red ((t (:background "#FF6666" :foreground "#FF6666"))))
- '(term-color-white ((t (:background "#F1EFEE" :foreground "#F1EFEE"))))
- '(term-color-yellow ((t (:background "#FFFF66" :foreground "#FFFF66")))))
+ '(default ((t (:background "#262626" :foreground "#F8F8F2")))))
 
 (provide-theme 'Witchmacs)
