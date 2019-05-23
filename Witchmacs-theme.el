@@ -1,5 +1,5 @@
 (deftheme Witchmacs
-  "Created 2019-05-22.")
+  "Created 2019-05-23.")
 
 (custom-theme-set-variables
  'Witchmacs
@@ -103,6 +103,10 @@
  '(ido-only-match ((t (:foreground "#A6E22E"))))
  '(ido-indicator ((t (:background "#FF6666" :foreground "#E6DB74" :width condensed))))
  '(hl-line ((t (:background "#202020"))))
- '(default ((t (:background "#262626" :foreground "#F8F8F2")))))
+ '(company-preview-search ((t (:background "#99CCFF" :foreground "#262626"))))
+ '(company-tooltip-search ((default (:inherit (highlight)))))
+ '(company-tooltip-search-selection ((default (:inherit (highlight)))))
+ '(default ((t (:background "#262626" :foreground "#F8F8F2"))))
+ '(company-tooltip-common ((t (:foreground "#FF6666")))))
 
 (provide-theme 'Witchmacs)

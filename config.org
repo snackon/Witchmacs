@@ -312,17 +312,17 @@ Vim keybindings in Emacs. Please note that Witchmacs has NO other evil-mode comp
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package evil
-	:ensure t
-	:init
-	(setq evil-want-keybinding nil)
-	:config
-	(evil-mode 1))
+    :ensure t
+    :init
+    (setq evil-want-keybinding nil)
+    :config
+    (evil-mode 1))
 
-  (use-package evil-collection
-	:after evil
-	:ensure t
-	:config
-	(evil-collection-init))
+  ;(use-package evil-collection
+  ;  :after evil
+  ;  :ensure t
+  ;  :config
+  ;  (evil-collection-init))
 #+END_SRC
 ** Initialize beacon
 *** Description
@@ -398,18 +398,17 @@ Company is the autocompletion frontend that takes all the backends and gives you
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package company
-	:ensure t
-	:defer t
-	:config
-	(setq company-idle-delay 0)
-	(setq company-minimum-prefix-length 3)
-	(define-key company-active-map (kbd "M-n") nil)
-	(define-key company-active-map (kbd "M-p") nil)
-	(define-key company-active-map (kbd "C-n") #'company-select-next)
-	(define-key company-active-map (kbd "C-p") #'company-select-previous)
-	(define-key company-active-map (kbd "SPC") #'company-abort)
-	:hook
-	((c-mode c++-mode) . company-mode))
+    :ensure t
+    :config
+    (setq company-idle-delay 0)
+    (setq company-minimum-prefix-length 3)
+    (define-key company-active-map (kbd "M-n") nil)
+    (define-key company-active-map (kbd "M-p") nil)
+    (define-key company-active-map (kbd "C-n") #'company-select-next)
+    (define-key company-active-map (kbd "C-p") #'company-select-previous)
+    (define-key company-active-map (kbd "SPC") #'company-abort)
+    :hook
+    ((c-mode c++-mode) . company-mode))
 #+END_SRC
 ** Initialize yasnippet
 *** Description
@@ -431,18 +430,18 @@ Irony is the company backend for C and C++
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package company-c-headers
-	:ensure t)
+    :ensure t)
 
   (use-package company-irony
-	:ensure t
-	:config
-	(setq company-backends '((company-c-headers
-							  company-dabbrev-code
-							  company-irony))))
+    :ensure t
+    :config
+    (setq company-backends '((company-c-headers
+                              company-dabbrev-code
+                              company-irony))))
   (use-package irony
-	:ensure t
-	:config
-	:hook
-	(('c++-mode-hook 'c-mode-hook) . 'irony-mode)
-	('irony-mode-hook) . 'irony-cdb-autosetup-compile-options)
+    :ensure t
+    :config
+    :hook
+    ((c++-mode c-mode) . irony-mode)
+    ('irony-mode-hook) . 'irony-cdb-autosetup-compile-options)
 #+END_SRC
