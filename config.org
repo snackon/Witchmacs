@@ -77,15 +77,6 @@ Emacs breaks certain modes when it has line-numbers-mode enabled, (like docview 
 	(other-window 1))
   (global-set-key (kbd "C-x 3") 'split-and-follow-vertically)
 #+END_SRC
-** Always use bash when calling ansi-term
-Super - Control - return to open ansi-term on current buffer
-#+BEGIN_SRC emacs-lisp
-  (defvar my-term-shell "/bin/bash")
-  (defadvice ansi-term (before force-bash)
-	(interactive(list my-term-shell)))
-  (ad-activate 'ansi-term)
-  (global-set-key (kbd "<s-C-return>") 'ansi-term)
-#+END_SRC
 ** Transform yes-or-no questions into y-or-n
 #+BEGIN_SRC emacs-lisp
   (defalias 'yes-or-no-p 'y-or-n-p)
@@ -102,22 +93,52 @@ Super - Control - <arrow>
 #+BEGIN_SRC emacs-lisp
   (global-hl-line-mode t)
 #+END_SRC
-** Org mode
+* Org mode
 #+BEGIN_SRC emacs-lisp
   (add-hook 'org-mode-hook 'org-indent-mode)
   (add-hook 'org-mode-hook
           '(lambda ()
              (visual-line-mode 1)))
 #+END_SRC
+* Eshell
+** Why Eshell?
+We are using Emacs, so we might as well implement as many tools from our workflow into it as possible
+** Prompt
+#+BEGIN_SRC emacs-lisp
+  (setq eshell-prompt-regexp "^[^αλ\n]*[αλ] "
+        eshell-prompt-function
+        (lambda nil
+          (concat
+           (if (string= (eshell/pwd) (getenv "HOME"))
+               (propertize
+                "~"
+                'face `(:foreground "#99CCFF"))
+             (propertize
+              (eshell/basename (eshell/pwd))
+              'face `(:foreground "#99CCFF"))
+             )
+           (if (= (user-uid) 0) " α " (propertize " λ " 'face `(:foreground "#A6E22E"))
+               ))))
+
+  (setq eshell-highlight-prompt nil)
+#+END_SRC
+** Aliases
+#+BEGIN_SRC emacs-lisp
+  (defalias 'open 'find-file-other-window)
+#+END_SRC
+** Super - Control - RET to open eshell
+#+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "<s-C-return>") 'eshell)
+#+END_SRC
 * Use-package section
 ** Initialize diminish
 *** Description
-Diminish hides minor modes in the modeline to prevent cluttering it.
+Diminish hides minor modes in the modeline to prevent cluttering it
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package diminish
     :ensure t
-    :after (:all 
+    :after (:all
     beacon
     which-key
     page-break-lines
@@ -125,7 +146,8 @@ Diminish hides minor modes in the modeline to prevent cluttering it.
     eldoc
     abbrev
     irony
-    company)
+    company
+    meghanada)
     :config
     (diminish 'beacon-mode)
     (diminish 'which-key-mode)
@@ -135,7 +157,8 @@ Diminish hides minor modes in the modeline to prevent cluttering it.
     (diminish 'abbrev-mode)
     (diminish 'irony-mode)
     (diminish 'company-mode)
-    (diminish 'visual-line-mode))
+    (diminish 'visual-line-mode)
+    (diminish 'meghanada-mode))
 #+END_SRC
 *** Historical
 22/04/2019: This macro was provided by user [[https://gist.github.com/ld34/44d100b79964407e5ddf41035e3cd32f][ld43]] after
@@ -278,7 +301,7 @@ The frontend of Witchmacs; without this there'd be no Marisa in your Emacs start
 *** Notes
 If you pay close attention to the code in dashboard, you'll  notice that it uses custom functions defined under the :preface use-package block. I wrote all of those functions by looking at other people's Emacs distributions (Mainly [[https://github.com/seagle0128/.emacs.d][Centaur Emacs]]) and then experimenting and adapting them to Witchmacs. If you dig around, you'll find the same things I did - maybe even more!
 *** Historical
-22/05/19: On this day, the main maintainers of the dashboard package have added built-in fuinctionality to display init and package load time, thing that I already had implemented much earlier on my own. I have left here my implementation for historical purposes.
+22/05/19: On this day, the main maintainers of the dashboard package have added built-in fuinctionality to display init and package load time, thing that I already had implemented much earlier on my own. I have left here my implementation for historical purposes
 #+BEGIN_SRC emacs-lisp
   ;(insert (concat
   ;         (propertize (format "%d packages loaded in %s"
@@ -408,7 +431,7 @@ Company is the autocompletion frontend that takes all the backends and gives you
     (define-key company-active-map (kbd "C-p") #'company-select-previous)
     (define-key company-active-map (kbd "SPC") #'company-abort)
     :hook
-    ((c-mode c++-mode) . company-mode))
+    ((java-mode c-mode c++-mode) . company-mode))
 #+END_SRC
 ** Initialize yasnippet
 *** Description
@@ -444,4 +467,16 @@ Irony is the company backend for C and C++
     :hook
     ((c++-mode c-mode) . irony-mode)
     ('irony-mode-hook) . 'irony-cdb-autosetup-compile-options)
+#+END_SRC
+** Java
+*** Description
+I use meghanada to provide me with very neat autocompletion when editing Java files. Of course there's a lot more things it can do, but I prefer using it only for that
+*** Code
+#+BEGIN_SRC emacs-lisp
+  (use-package meghanada
+    :ensure t
+    :config
+    (add-hook 'java-mode-hook
+              (lambda ()
+                (meghanada-mode t))))
 #+END_SRC
