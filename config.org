@@ -128,7 +128,17 @@ We are using Emacs, so we might as well implement as many tools from our workflo
 #+END_SRC
 ** Super - Control - RET to open eshell
 #+BEGIN_SRC emacs-lisp
-  (global-set-key (kbd "<s-C-return>") 'eshell)
+  (defun eshell-other-window ()
+    "Create or visit an eshell buffer."
+    (interactive)
+    (if (not (get-buffer "*eshell*"))
+        (progn
+          (split-window-sensibly (selected-window))
+          (other-window 1)
+          (eshell))
+      (switch-to-buffer-other-window "*eshell*")))
+
+  (global-set-key (kbd "<s-C-return>") 'eshell-other-window)
 #+END_SRC
 * Use-package section
 ** Initialize diminish
