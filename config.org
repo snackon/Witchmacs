@@ -103,9 +103,11 @@ Super - Control - <arrow>
 * Eshell
 ** Why Eshell?
 We are using Emacs, so we might as well implement as many tools from our workflow into it as possible
+*** Caveats
+Eshell cannot handle ncurses programs and in certain interpreters (Python, GHCi) selecting previous commands does not work (for now). I recommend using eshell for light cli work, and using your external terminal emulator of choice for heavier tasks
 ** Prompt
 #+BEGIN_SRC emacs-lisp
-  (setq eshell-prompt-regexp "^[^αλ\n]*[αλ] "
+  (setq eshell-prompt-regexp "^[^αλ\n]*[αλ>] " ; "^[^αλ\n]*[αλ] "
         eshell-prompt-function
         (lambda nil
           (concat
@@ -117,7 +119,7 @@ We are using Emacs, so we might as well implement as many tools from our workflo
               (eshell/basename (eshell/pwd))
               'face `(:foreground "#99CCFF"))
              )
-           (if (= (user-uid) 0) " α " (propertize " λ " 'face `(:foreground "#A6E22E"))
+           (if (= (user-uid) 0) (propertize " α " 'face `(:foreground "#FF6666")) (propertize " λ " 'face `(:foreground "#A6E22E"))
                ))))
 
   (setq eshell-highlight-prompt nil)
@@ -125,6 +127,18 @@ We are using Emacs, so we might as well implement as many tools from our workflo
 ** Aliases
 #+BEGIN_SRC emacs-lisp
   (defalias 'open 'find-file-other-window)
+  (defalias 'clean 'eshell/clear-scrollback)
+#+END_SRC
+** Custom functions
+#+BEGIN_SRC emacs-lisp
+  (defun eshell/sudo-open (filename)
+    "Open a file as root in Eshell."
+    (let ((qual-filename (if (string-match "^/" filename)
+                             filename
+                           (concat (expand-file-name (eshell/pwd)) "/" filename))))
+      (switch-to-buffer
+       (find-file-noselect
+        (concat "/sudo::" qual-filename)))))
 #+END_SRC
 ** Super - Control - RET to open eshell
 #+BEGIN_SRC emacs-lisp
@@ -322,7 +336,7 @@ If you pay close attention to the code in dashboard, you'll  notice that it uses
 #+END_SRC
 ** Initialize which-key
 *** Description
-Incredibly useful package; press tab to see possible command completions
+Incredibly useful package; if you are in the middle of a command and don't know what to type next, just wait a second and you'll get a nice buffer with all possible completions
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package which-key
@@ -481,7 +495,7 @@ Irony is the company backend for C and C++
 #+END_SRC
 ** Java
 *** Description
-I use meghanada to provide me with very neat autocompletion when editing Java files. Of course there's a lot more things it can do, but I prefer using it only for that
+I use meghanada to provide very neat autocompletion when editing Java files. Of course there's a lot more things it can do, but I prefer using it only for that
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package meghanada

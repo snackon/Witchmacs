@@ -1,27 +1,14 @@
 * First things first!
-The first thing you might want to do as soon as you install
-Witchmacs is to change your font. To do this, do the following:
+The first thing you might want to do as soon as you install Witchmacs is to change your font. To do this, do the following:
 
 #+BEGIN_EXAMPLE
 M-x customize-face
 Customize face (default 'all faces'): default
 #+END_EXAMPLE
 
-Where M-x means "press meta x" where meta is, usually, left alt.
-Then type "customize-face" without the quotes and press <RET> (enter).
-You'll get a little prompt at the bottom that says "Customize face
-(default 'all faces'):". Type in "default" and press <RET>. Your
-current active buffer will change to the *Customize Face: Default*
-buffer and give you this nice gui screen where you can change your
-font. Please note that the default editing mode of *Customize Face:
-Default* is Emacs', and you cannot use Vim keys there so please use
-the arrow keys for movement. I promise that'll be the first and last
-time we use the arrow keys!
+Where M-x means "press meta x" where meta is, usually, left alt. Then type "customize-face" without the quotes and press <RET> (enter). You'll get a little prompt at the bottom that says "Customize face (default 'all faces'):". Type in "default" and press <RET>. Your current active buffer will change to the *Customize Face: Default* buffer and give you this nice gui screen where you can change your font. Please note that the default editing mode of *Customize Face: Default* is Emacs', and you cannot use Vim keys there so please use the arrow keys for movement. I promise that'll be the first and last time we use the arrow keys!
 
-In the field right after "Font Family" type in the name of the font
-you want to use then place your cursor over the "Apply and Save"
-button and press <RET>. Your changes will be saved and take place
-immediately. After you've done that, do:
+In the field right after "Font Family" type in the name of the font you want to use then place your cursor over the "Apply and Save" button and press <RET>. Your changes will be saved and take place immediately. After you've done that, do:
 
 #+BEGIN_EXAMPLE
 C-x k
@@ -32,12 +19,7 @@ To kill the customization screen and return to the previous buffer.
 
 * Getting familiar with Emacs keybinds
 ** Let's be idorts!
-When the time comes to discuss which keybinds are superior, Emacs' or
-Vim's, there is never a definitive answer. Some people like Emacs'
-keybinds and some people like Vim's keybinds. Some people even go as
-far as to make their own keybinds! I like to adopt the middle ground
-on this issue and use both, Emacs AND Vim keybinds, where each would
-outshine the other.
+When the time comes to discuss which keybinds are superior, Emacs' or Vim's, there is never a definitive answer. Some people like Emacs' keybinds and some people like Vim's keybinds. Some people even go as far as to make their own keybinds! I like to adopt the middle ground on this issue and use both, Emacs AND Vim keybinds, where each would outshine the other.
 
 For example, for moving within a file I use Vim's keybinds:
 
@@ -52,11 +34,7 @@ gg to go to the top of the file
 G to go to the bottom of the file
 #+END_EXAMPLE
 
-These are the most common and basic keybinds I use for moving within a
-file. I never bothered - and never will - to learn Emacs' movement keybinds
-because, in all honesty, they're junk. In fact, I never did the Emacs
-tutorial and learned the most useful Emacs keybinds by practice, by using
-them when I needed them. Some of them are these:
+These are the most common and basic keybinds I use for moving within a file. I never bothered - and never will - to learn Emacs' movement keybind because, in all honesty, they're junk. In fact, I never did the Emacs tutorial and learned the most useful Emacs keybinds by practice, by using them when I needed them. Some of them are these:
 
 #+BEGIN_EXAMPLE
 C-x C-f to find a file
@@ -72,39 +50,21 @@ C-z to switch between Evil and Emacs mode
 C-g to quit any action
 #+END_EXAMPLE
 
-The last keybind is particularly useful for when you screwed something
-up and don't know how to exit. Sort of like pressing ESC or doing :qa!
-in Vim. 
+The last keybind is particularly useful for when you screwed something up and don't know how to exit. Sort of like pressing ESC or doing :qa! in Vim.
 
-Often times you'll run into a buffer that by default comes in Emacs mode.
-There is no need to panic when this happens, just do C-z and you'll switch
-back to Evil mode. There is a package that minimizes the amount of times
-a situation like this might happen. It's called [[https://github.com/emacs-evil/evil-collection][evil-collection]] but since
-I don't use it I cannot argue for or against it. This might change in the
-future. But for now, I leave the choice of using this package up to you.
+Often times you'll run into a buffer that by default comes in Emacs mode. There is no need to panic when this happens, just do C-z and you'll switch back to Evil mode. There is a package that minimizes the amount of times a situation like this might happen. It's called [[https://github.com/emacs-evil/evil-collection][evil-collection]] but since I don't use it I cannot argue for or against it. This might change in the future. But for now, I leave the choice of using this package up to you.
 
 ** The power of M-x
-Meta x is a particularly useful Emacs keybind. It manually calls a function
-and does whatever that function does. If that doesn't blow your mind yet,
-it'll do in no time.
+Meta x is a particularly useful Emacs keybind. It manually calls an interactive function and does whatever that function does. If that doesn't blow your mind yet, it'll do in no time.
 
-I like learning by doing, so let's do some cool stuff with M-x. First, let's
-check out our available package list by calling the list-packages function:
+I like learning by doing, so let's do some cool stuff with M-x. First, let's check out our available package list by calling the list-packages function:
 
 #+BEGIN_EXAMPLE
 M-x list-packages
 <RET>
 #+END_EXAMPLE
 
-This'll open the *Packages* buffer and show us a list of ALL packages that
-are available for installation. Please note that by default Witchmacs enables
-the melpa package repository. If you want to add other package repositories
-please refer to init.el. Be wary, though, that by installing packages through
-list-packages you are actually only doing that: installing them. If you were
-to delete your Emacs installation, reinstall it and slap your config on top of
-it, the packages you downloaded using list-packages wouldn't be there. To 
-avoid this issue I recommend you to do all package-handling through your config
-files. It's a good habit to do so, anyway!
+This'll open the *Packages* buffer and show us a list of ALL packages that are available for installation. Please note that by default Witchmacs enables the melpa package repository. If you want to add other package repositories please refer to init.el. Be wary, though, that by installing packages through list-packages you are actually only doing that: installing them. If you were to delete your Emacs installation, reinstall it and slap your config on top of it, the packages you downloaded using list-packages wouldn't be there. To avoid this issue I recommend you to do all package-handling through your config files. It's a good habit to do so, anyway!
 
 Next, let's play some Tetris. Do the following command:
 
@@ -113,41 +73,36 @@ M-x tetris
 <RET>
 #+END_EXAMPLE
 
-This'll call the Tetris function, which'll open a new buffer with a game of
-Tetris on it. My highscore is 938, try and beat it!
+This'll call the Tetris function, which'll open a new buffer with a game of Tetris on it. My highscore is 938, try and beat it!
 
-If you ever run into a situation where you don't know what command to use
-M-x with, just press tab and you'll get a HUGE list of possible command
-completions. I learned a LOT about Emacs this way, and so will you!
+If you ever run into a situation where you don't know what command to use M-x with, just press tab and you'll get a HUGE list of possible command completions. I learned a LOT about Emacs this way, and so will you!
 
-* A good theme to go with a good editor
-A common practice of most Emacs distributions is to utilize customization
-layers for everything config-related within itself. There is nothing
-inherently wrong with this, but of course this poses some difficulties
-when you want to configure things to your own liking. I'm lazy and I
-don't like making things complicated, so I decided against it for Witchmacs,
-thus putting all the power of customization in your own hands (this would
-still keep true if all you had done was install Emacs!).
+* Making Emacs look nice
+** A good theme to go with a good editor
+A common practice of most Emacs distributions is to utilize customization layers for everything config-related within itself. There is nothing inherently wrong with this, but of course this poses some difficulties when you want to configure things to your own liking. I'm lazy and I don't like making things complicated, so I decided against it for Witchmacs thus putting all the power of customization in your own hands (this would still keep true if all you had done was install Emacs!).
 
-Lets put this power to good use. We'll be editing Witchmacs' theme which
-I based off the popular Emacs theme, Monokai. Do the following command:
+Lets put this power to good use. We'll be editing Witchmacs' theme which I based off the popular Emacs theme, Monokai. Do the following command:
 
 #+BEGIN_EXAMPLE
 M-x customize-create-theme
 <RET>
 #+END_EXAMPLE
 
-And then press y. This'll put us into the *Custom-theme* buffer and allow
-us to edit the many possible faces of it. But we don't want to start from
-scratch, screw that! hover over to Visit Theme at the very top, press <RET>
-and type in Witchmacs (it is case-sensitive so the capitalized W is important),
-<RET> once again and y to whatever prompts may appear! This'll load the Witchmacs
-theme in the *Custom-theme* buffer for editing. Whatever is under "Theme
-faces:" are the faces for the Witchmacs theme. From here you can change its
-colors however you like, add whatever faces for whatever packages you might
-use and save them under one neat theme! There really is no limit to what you
-can do with this buffer, all you need to know is the name of the face you want
-to edit and the hex code of the color you want to change it to.
+And then press y. This'll put us into the *Custom-theme* buffer and allow us to edit the many possible faces of it. But we don't want to start from scratch, screw that! hover over to Visit Theme at the very top, press <RET> and type in Witchmacs (it is case-sensitive so the capitalized W is important), <RET> once again and y to whatever prompts may appear! This'll load the Witchmacs theme in the *Custom-theme* buffer for editing. Whatever is under "Theme faces:" are the faces for the Witchmacs theme. From here you can change its colors however you like, add whatever faces for whatever packages you might use and save them under one neat theme! There really is no limit to what you can do with this buffer, all you need to know is the name of the face you want to edit and the hex code of the color you want to change it to.
 
+** Making the dashboard look dashing!
+The Emacs dashboard is an important part of Emacs. It is the screen that greets you when you get home and run Emacs the first time, so it is imperative that we make it look good!
 
-Witchmacs cheatsheet is a work in progress!
+By default, the Witchmacs dashboard comes with the Witchmacs logo, five general-purpose button widgets and lists the amount of packages loaded and how long it took to load them. First, we'll be changing the Witchmacs logo (skip ahead if you want to change other things).
+
+Changing the Witchmacs dashboard logo is as simple as going into config.org, go to the use-package section, go to the dashboard entry, code subheading and looking for the `(setq dashboard-startup-banner "~/.emacs.d/marivector.png")` and then changing the path between the parentheses to the path of your new dashboard image. Or renaming your new dashboard image 'marivector.png' and then dropping it inside '~/.emacs.d/', either way works. Next, we'll look at the dashboard widget buttons.
+
+Go into the code subheading of the dashboard entry in the use-package section and look at the :preface block of dashboard's use-package. You'll find a function named 'dashboard-insert-buttons' and below it certain blocks that start with '(widget-create'. THESE are the ones you want to edit if you want to change your dashboard widget buttons. Let's edit a primordial one: 'Update Witchmacs'.
+
+What the 'Update Witchmacs' button does is run the 'git pull' command from the shell and update your current Witchmacs installation to the latest commit in its github repo. Now, this is all fine and dandy if you're me, or if you're using pure Witchmacs (Witchmacs with no changes) which I don't recommend doing at all. So, the best way to get the most out of changing this button is to create a github repo, upload your .emacs.d there and then pressing the button 'Update Witchmacs' (aptly renamed, of course) to update.
+
+'Update Witchmacs' calls the 'update-config' function defined under the same :preface block, so you can see what it does there (basically what I already explained in the previous paragraph). And of course, if you simply don't want to use the 'Update Witchmacs' button at all, you can just straight out remove it or replace it with something else. To make your own custom widget buttons, refer to the elisp [[https://www.gnu.org/software/emacs/manual/html_mono/widget.html][widget documentation]] and look at the other widgets I already made.
+
+And finally, to change whether to display loaded packages or not, set `(setq dashboard-set-init-info t)` to 'nil' instead of 't'. For further customization options, refer to the [[https://github.com/emacs-dashboard/emacs-dashboard][emacs dashboard]] page on github.
+
+#+Witchmacs cheatsheet is a work in progress!
