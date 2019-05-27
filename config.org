@@ -155,60 +155,44 @@ Eshell cannot handle ncurses programs and in certain interpreters (Python, GHCi)
   (global-set-key (kbd "<s-C-return>") 'eshell-other-window)
 #+END_SRC
 * Use-package section
+** Defer loading most packages for quicker startup times
+#+BEGIN_SRC emacs-lisp
+(setq use-package-always-defer t)
+#+END_SRC
 ** Initialize diminish
 *** Description
 Diminish hides minor modes in the modeline to prevent cluttering it
 *** Code
 #+BEGIN_SRC emacs-lisp
+(require 'dash)
+(defmacro diminish-built-in (&rest modes)
+  "Accepts a list MODES of built-in emacs modes and generates `with-eval-after-load` diminish forms based on the file implementing the mode functionality for each mode."
+  (declare (indent defun))
+  (let* ((get-file-names (lambda (pkg) (file-name-base (symbol-file pkg))))
+  (diminish-files (mapcar get-file-names modes))
+  (zip-diminish   (-zip modes diminish-files)))
+    `(progn
+       ,@(cl-loop for (mode . file) in zip-diminish
+		  collect `(with-eval-after-load ,file
+			     (diminish (quote ,mode)))))))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
   (use-package diminish
     :ensure t
-    :after (:all
-    beacon
-    which-key
-    page-break-lines
-    undo-tree
-    eldoc
-    abbrev
-    irony
-    company
-    meghanada)
+    :defer nil
     :config
-    (diminish 'beacon-mode)
-    (diminish 'which-key-mode)
-    (diminish 'page-break-lines-mode)
-    (diminish 'undo-tree-mode)
-    (diminish 'eldoc-mode)
-    (diminish 'abbrev-mode)
-    (diminish 'irony-mode)
-    (diminish 'company-mode)
-    (diminish 'visual-line-mode)
-    (diminish 'meghanada-mode))
-#+END_SRC
-*** Historical
-22/04/2019: This macro was provided by user [[https://gist.github.com/ld34/44d100b79964407e5ddf41035e3cd32f][ld43]] after
-I couldn't figure out how to make diminish work by being
-at the top of the config file
-#+BEGIN_SRC emacs-lisp
-;(defmacro diminish-built-in (&rest modes)
-;  "Accepts a list MODES of built-in emacs modes and generates `with-eval-after-load` diminish forms based on the file implementing the mode functionality for each mode."
-;  (declare (indent defun))
-;  (let* ((get-file-names (lambda (pkg) (file-name-base (symbol-file pkg))))
-;	 (diminish-files (mapcar get-file-names modes))
-;	 (zip-diminish   (-zip modes diminish-files)))
-;    `(progn
-;       ,@(cl-loop for (mode . file) in zip-diminish
-;		  collect `(with-eval-after-load ,file
-;			     (diminish (quote ,mode)))))))
-; This bit goes in init.el
-;(diminish-built-in
-;  beacon-mode
-;  which-key-mode
-;  page-break-lines-mode
-;  undo-tree-mode
-;  eldoc-mode
-;  abbrev-mode
-;  irony-mode
-;  company-mode)
+    (diminish-built-in
+      beacon-mode
+      which-key-mode
+      page-break-lines-mode
+      undo-tree-mode
+      eldoc-mode
+      abbrev-mode
+      irony-mode
+      company-mode
+      visual-line-mode
+      meghanada-mode))
 #+END_SRC
 ** Initialize spaceline
 *** Description
@@ -216,7 +200,7 @@ I tried spaceline and didn't like it. What I did like was its theme
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package spaceline
-	:ensure t)
+    :ensure t)
 #+END_SRC
 ** Initialize powerline and utilize the spaceline theme
 *** Description
@@ -236,8 +220,9 @@ The frontend of Witchmacs; without this there'd be no Marisa in your Emacs start
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package dashboard
-	:ensure t
-	:preface
+  :ensure t
+  :defer nil
+  :preface
 	(defun update-config ()
 	  "Update Witchmacs to the latest version."
 	  (interactive)
@@ -360,6 +345,7 @@ Vim keybindings in Emacs. Please note that Witchmacs has NO other evil-mode comp
 #+BEGIN_SRC emacs-lisp
   (use-package evil
     :ensure t
+    :defer nil
     :init
     (setq evil-want-keybinding nil)
     (setq evil-want-C-u-scroll t)
@@ -399,7 +385,6 @@ Switch window is a neat package because instead of having to painstakingly do C 
 #+BEGIN_SRC emacs-lisp
   (use-package switch-window
 	:ensure t
-	:defer t
 	:config
 	(setq switch-window-input-style 'minibuffer)
 	(setq switch-window-increase 4)
@@ -415,15 +400,18 @@ Switch window is a neat package because instead of having to painstakingly do C 
 For the longest time I used the default way of switching and killing buffers in Emacs. Same for finding files. Ido-mode made these three tasks IMMENSELY easier and more intuitive. Please not that I still use the default way M - x works because I believe all you really need for it is which-key
 *** Code
 #+BEGIN_SRC emacs-lisp
-  (setq ido-enable-flex-matching nil)
-  (setq ido-create-new-buffer 'always)
-  (setq ido-everywhere t)
-  (ido-mode 1)
+  (use-package ido
+    :init
+    (ido-mode 1)
+    :config
+    (setq ido-enable-flex-matching nil)
+    (setq ido-create-new-buffer 'always)
+    (setq ido-everywhere t))
 
   (use-package ido-vertical-mode
-	:ensure t
-	:init
-	(ido-vertical-mode 1))
+    :ensure t
+    :init
+    (ido-vertical-mode 1))
   ; This enables arrow keys to select while in ido mode. If you want to
   ; instead use the default Emacs keybindings, change it to
   ; "'C-n-and-C-p-only"
@@ -463,14 +451,15 @@ Company is the autocompletion frontend that takes all the backends and gives you
 Yasnippet provides useful snippets, nothing to do with Company but still useful when used in conjuction with it
 *** Code
 #+BEGIN_SRC emacs-lisp
-  (use-package yasnippet
-	:ensure t
-	:config
-	  (use-package yasnippet-snippets
-		:ensure t)
-	:hook
-	((c-mode c++-mode) . 'yas-minor-mode))
-  (yas-reload-all)
+(use-package yasnippet
+  :ensure t
+  :hook
+  ((c-mode c++-mode) . yas-minor-mode)
+  :config
+  (yas-reload-all))
+
+(use-package yasnippet-snippets
+  :ensure t)
 #+END_SRC
 ** C & C++
 *** Description
