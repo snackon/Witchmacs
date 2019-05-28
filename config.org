@@ -170,7 +170,14 @@ Eshell cannot handle ncurses programs and in certain interpreters (Python, GHCi)
 #+BEGIN_SRC emacs-lisp
 (setq use-package-always-defer t)
 #+END_SRC
-** Historical: diminish
+** Initialize diminish
+*** Description
+Diminish hides minor modes to prevent cluttering your mode line
+*** Code
+#+BEGIN_SRC emacs-lisp
+  (use-package diminish
+    :ensure t)
+#+END_SRC
 *** Historical
 22/04/2019: This macro was provided by user [[https://gist.github.com/ld34/44d100b79964407e5ddf41035e3cd32f][ld43]] after I couldn’t figure out how to make diminish work by being at the top of the config file.
 
@@ -198,7 +205,7 @@ Eshell cannot handle ncurses programs and in certain interpreters (Python, GHCi)
   ;  meghanada-mode)
 #+END_SRC
 
-27/05/2019: Since the diminish functionality was always built-in in use-package, there was never a point in using diminish. I still leave its entry here for historical purposes.
+27/05/2019: Since the diminish functionality was always built-in in use-package, there was never a point in using a diminish config. lol silly me
 ** Initialize spaceline
 *** Description
 I tried spaceline and didn't like it. What I did like was its theme
