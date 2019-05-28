@@ -93,6 +93,10 @@ Super - Control - <arrow>
 #+BEGIN_SRC emacs-lisp
   (global-hl-line-mode t)
 #+END_SRC
+** Defer loading most packages for quicker startup times
+#+BEGIN_SRC emacs-lisp
+(setq use-package-always-defer t)
+#+END_SRC
 * Org mode
 #+BEGIN_SRC emacs-lisp
   (use-package org
@@ -101,6 +105,9 @@ Super - Control - <arrow>
     (add-hook 'org-mode-hook
               '(lambda ()
                  (visual-line-mode 1))))
+
+  (use-package org-indent
+    :diminish org-indent-mode)
 #+END_SRC
 * Eshell
 ** Why Eshell?
@@ -157,7 +164,10 @@ Eshell cannot handle ncurses programs and in certain interpreters (Python, GHCi)
   (global-set-key (kbd "<s-C-return>") 'eshell-other-window)
 #+END_SRC
 * Use-package section
-** Auto-update packages
+** Initialize auto-package-update
+*** Description
+Auto-package-update automatically updates and removes old packages
+*** Code
 #+BEGIN_SRC emacs-lisp
   (use-package auto-package-update
     :ensure t
@@ -165,10 +175,6 @@ Eshell cannot handle ncurses programs and in certain interpreters (Python, GHCi)
     (setq auto-package-update-delete-old-versions t)
     (setq auto-package-update-hide-results t)
     (auto-package-update-maybe))
-#+END_SRC
-** Defer loading most packages for quicker startup times
-#+BEGIN_SRC emacs-lisp
-(setq use-package-always-defer t)
 #+END_SRC
 ** Initialize diminish
 *** Description
@@ -475,7 +481,7 @@ Company is the autocompletion frontend that takes all the backends and gives you
 #+BEGIN_SRC emacs-lisp
   (use-package company
     :ensure t
-    :diminish company-mode
+    :diminish (meghanada-mode company-mode irony-mode)
     :config
     (setq company-idle-delay 0)
     (setq company-minimum-prefix-length 3)
@@ -492,15 +498,16 @@ Company is the autocompletion frontend that takes all the backends and gives you
 Yasnippet provides useful snippets, nothing to do with Company but still useful when used in conjuction with it
 *** Code
 #+BEGIN_SRC emacs-lisp
-(use-package yasnippet
-  :ensure t
-  :hook
-  ((c-mode c++-mode) . yas-minor-mode)
-  :config
-  (yas-reload-all))
+  (use-package yasnippet
+    :ensure t
+    :diminish yas-minor-mode
+    :hook
+    ((c-mode c++-mode) . yas-minor-mode)
+    :config
+    (yas-reload-all))
 
-(use-package yasnippet-snippets
-  :ensure t)
+  (use-package yasnippet-snippets
+    :ensure t)
 #+END_SRC
 ** C & C++
 *** Description
@@ -521,7 +528,6 @@ Irony is the company backend for C and C++
   (use-package irony
     :defer nil
     :ensure t
-    :diminish irony-mode
     :config
     :hook
     ((c++-mode c-mode) . irony-mode)
@@ -535,7 +541,6 @@ I use meghanada to provide very neat autocompletion when editing Java files. Of 
   (use-package meghanada
     :ensure t
     :defer nil
-    :diminish meghanada-mode
     :config
     (add-hook 'java-mode-hook
               (lambda ()
