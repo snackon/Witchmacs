@@ -97,7 +97,10 @@ Super - Control - <arrow>
 #+BEGIN_SRC emacs-lisp
 (setq use-package-always-defer t)
 #+END_SRC
-* Org mode
+* =Org= mode
+** Description
+One of the main selling points of Emacs! no Emacs distribution is complete without sensible and well-defined org-mode defaults
+** Code
 #+BEGIN_SRC emacs-lisp
   (use-package org
     :config
@@ -139,6 +142,7 @@ Eshell cannot handle ncurses programs and in certain interpreters (Python, GHCi)
   (defalias 'clean 'eshell/clear-scrollback)
 #+END_SRC
 ** Custom functions
+*** Open files as root
 #+BEGIN_SRC emacs-lisp
   (defun eshell/sudo-open (filename)
     "Open a file as root in Eshell."
@@ -149,7 +153,7 @@ Eshell cannot handle ncurses programs and in certain interpreters (Python, GHCi)
        (find-file-noselect
         (concat "/sudo::" qual-filename)))))
 #+END_SRC
-** Super - Control - RET to open eshell
+*** Super - Control - RET to open eshell
 #+BEGIN_SRC emacs-lisp
   (defun eshell-other-window ()
     "Create or visit an eshell buffer."
@@ -164,19 +168,20 @@ Eshell cannot handle ncurses programs and in certain interpreters (Python, GHCi)
   (global-set-key (kbd "<s-C-return>") 'eshell-other-window)
 #+END_SRC
 * Use-package section
-** Initialize auto-package-update
+** Initialize =auto-package-update=
 *** Description
 Auto-package-update automatically updates and removes old packages
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package auto-package-update
+    :defer nil
     :ensure t
     :config
     (setq auto-package-update-delete-old-versions t)
     (setq auto-package-update-hide-results t)
     (auto-package-update-maybe))
 #+END_SRC
-** Initialize diminish
+** Initialize =diminish=
 *** Description
 Diminish hides minor modes to prevent cluttering your mode line
 *** Code
@@ -212,7 +217,7 @@ Diminish hides minor modes to prevent cluttering your mode line
 #+END_SRC
 
 27/05/2019: Since the diminish functionality was always built-in in use-package, there was never a point in using a diminish config. lol silly me
-** Initialize spaceline
+** Initialize =spaceline=
 *** Description
 I tried spaceline and didn't like it. What I did like was its theme
 *** Code
@@ -220,7 +225,7 @@ I tried spaceline and didn't like it. What I did like was its theme
   (use-package spaceline
     :ensure t)
 #+END_SRC
-** Initialize powerline and utilize the spaceline theme
+** Initialize =powerline= and utilize the spaceline theme
 *** Description
 I prefer powerline over spaceline, but the default powerline themes don't work for me for whatever reason, so I use the spaceline theme
 *** Code
@@ -232,7 +237,7 @@ I prefer powerline over spaceline, but the default powerline themes don't work f
 	:hook
 	('after-init-hook) . 'powerline-reset)
 #+END_SRC
-** Initialize dashboard
+** Initialize =dashboard=
 *** Description
 The frontend of Witchmacs; without this there'd be no Marisa in your Emacs startup screen
 *** Code
@@ -337,7 +342,7 @@ If you pay close attention to the code in dashboard, you'll  notice that it uses
   ;
   ;(dashboard-center-line)
 #+END_SRC
-** Initialize which-key
+** Initialize =which-key=
 *** Description
 Incredibly useful package; if you are in the middle of a command and don't know what to type next, just wait a second and you'll get a nice buffer with all possible completions
 *** Code
@@ -348,7 +353,7 @@ Incredibly useful package; if you are in the middle of a command and don't know 
     :init
     (which-key-mode))
 #+END_SRC
-** Initialize swiper
+** Initialize =swiper=
 *** Description
 When doing C-s to search, you get this very nice and neat mini-buffer that you can traverse with the arrow keys (or C-n and C-p) and then press <RET> to select where you want to go
 *** Code
@@ -357,7 +362,7 @@ When doing C-s to search, you get this very nice and neat mini-buffer that you c
 	:ensure t
 	:bind ("C-s" . 'swiper))
 #+END_SRC
-** Initialize evil mode
+** Initialize =evil= mode
 *** Description
 Vim keybindings in Emacs. Please note that Witchmacs has NO other evil-mode compatibility packages because I like to KISS. This might change in the future
 *** Code
@@ -377,7 +382,7 @@ Vim keybindings in Emacs. Please note that Witchmacs has NO other evil-mode comp
   ;  :config
   ;  (evil-collection-init))
 #+END_SRC
-** Initialize beacon
+** Initialize =beacon=
 *** Description
 You might find beacon an unnecesary package but I find it very neat. It briefly highlights the cursor position when switching to a new window or buffer
 *** Code
@@ -388,7 +393,7 @@ You might find beacon an unnecesary package but I find it very neat. It briefly 
     :init
     (beacon-mode 1))
 #+END_SRC
-** Initialize avy
+** Initialize =avy=
 *** Description
 Avy is a very useful package; instead of having to move your cursor to a line that is very far away, just do M - s and type the character that you want to move to
 *** Code
@@ -398,7 +403,7 @@ Avy is a very useful package; instead of having to move your cursor to a line th
 	:bind
 	("M-s" . avy-goto-char))
 #+END_SRC
-** Initialize switch-window
+** Initialize =switch-window=
 *** Description
 Switch window is a neat package because instead of having to painstakingly do C - x o until you're in the window you want  to edit, you can just do C - x o and pick the one you want to move to according to the letter it is assigned to
 *** Code
@@ -415,7 +420,7 @@ Switch window is a neat package because instead of having to painstakingly do C 
 	:bind
 	([remap other-window] . switch-window))
 #+END_SRC
-** Initialize ido and ido-vertical
+** Initialize =ido= and =ido-vertical=
 *** Description
 For the longest time I used the default way of switching and killing buffers in Emacs. Same for finding files. Ido-mode made these three tasks IMMENSELY easier and more intuitive. Please not that I still use the default way M - x works because I believe all you really need for it is which-key
 *** Code
@@ -437,7 +442,7 @@ For the longest time I used the default way of switching and killing buffers in 
   ; "'C-n-and-C-p-only"
   (setq ido-vertical-define-keys 'C-n-C-p-up-and-down)
 #+END_SRC
-** Initialize async
+** Initialize =async=
 *** Description
 Utilize asynchronous processes whenever possible
 *** Code
@@ -447,34 +452,42 @@ Utilize asynchronous processes whenever possible
 	:init
 	(dired-async-mode 1))
 #+END_SRC
-** Initialize page-break-lines
+** Initialize =htmlize=
+*** Description
+Besides the neat syntax highlighting, htmlize enables us to export .org files to .html
+*** Code
+#+BEGIN_SRC emacs-lisp
+  (use-package htmlize
+    :ensure t)
+#+END_SRC
+** Initialize =page-break-lines=
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package page-break-lines
     :ensure t
     :diminish (page-break-lines-mode visual-line-mode))
 #+END_SRC
-** Initialize undo-tree
+** Initialize =undo-tree=
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package undo-tree
     :ensure t
     :diminish undo-tree-mode)
 #+END_SRC
-** Built-in entry: eldoc
+** Built-in entry: =eldoc=
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package eldoc
     :diminish eldoc-mode)
 #+END_SRC
-** Built-in entry: abbrev
+** Built-in entry: =abbrev=
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package abbrev
     :diminish abbrev-mode)
 #+END_SRC
 * Programming section
-** Company
+** Initialize =company=
 *** Description
 Company is the autocompletion frontend that takes all the backends and gives you possible autocompletions when writing programs
 *** Code
@@ -493,7 +506,7 @@ Company is the autocompletion frontend that takes all the backends and gives you
     :hook
     ((java-mode c-mode c++-mode) . company-mode))
 #+END_SRC
-** Initialize yasnippet
+** Initialize =yasnippet=
 *** Description
 Yasnippet provides useful snippets, nothing to do with Company but still useful when used in conjuction with it
 *** Code

@@ -4,7 +4,7 @@ The cutest Emacs distribution
 ![Witchmacs](https://github.com/snackon/Witchmacs/blob/master/gnumarisa.png)
 
 # Introduction
-Configuration files for emacs to add a cute Marisa image and a few custom snippets
+Configuration files for emacs to add a cute Marisa image, a few pre-configured packages and a few custom snippets
 
 # Why would I use this?
 >*What's the difference between a villain and a super villain? Presentation!*
@@ -18,8 +18,11 @@ As opposed to many other Emacs distributions, Witchmacs has ZERO customization l
 
 After running this command, the first time you run Emacs will download all of the specified packages in the config.org file, so please be patient!
 
+Also, to get autocompletion on C, C++ and Java files, you'll need to install the corresponding company backend servers first (you'll be automatically prompted to do so the first time you open a relevant file)
+
 # Dependencies
 `clang` as backend for C and C++ autocompletion
+
 `llvm` to install irony server
 
 # TODO
