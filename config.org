@@ -95,10 +95,12 @@ Super - Control - <arrow>
 #+END_SRC
 * Org mode
 #+BEGIN_SRC emacs-lisp
-  (add-hook 'org-mode-hook 'org-indent-mode)
-  (add-hook 'org-mode-hook
-          '(lambda ()
-             (visual-line-mode 1)))
+  (use-package org
+    :config
+    (add-hook 'org-mode-hook 'org-indent-mode)
+    (add-hook 'org-mode-hook
+              '(lambda ()
+                 (visual-line-mode 1))))
 #+END_SRC
 * Eshell
 ** Why Eshell?
@@ -155,45 +157,48 @@ Eshell cannot handle ncurses programs and in certain interpreters (Python, GHCi)
   (global-set-key (kbd "<s-C-return>") 'eshell-other-window)
 #+END_SRC
 * Use-package section
+** Auto-update packages
+#+BEGIN_SRC emacs-lisp
+  (use-package auto-package-update
+    :ensure t
+    :config
+    (setq auto-package-update-delete-old-versions t)
+    (setq auto-package-update-hide-results t)
+    (auto-package-update-maybe))
+#+END_SRC
 ** Defer loading most packages for quicker startup times
 #+BEGIN_SRC emacs-lisp
 (setq use-package-always-defer t)
 #+END_SRC
-** Initialize diminish
-*** Description
-Diminish hides minor modes in the modeline to prevent cluttering it
-*** Code
-#+BEGIN_SRC emacs-lisp
-(require 'dash)
-(defmacro diminish-built-in (&rest modes)
-  "Accepts a list MODES of built-in emacs modes and generates `with-eval-after-load` diminish forms based on the file implementing the mode functionality for each mode."
-  (declare (indent defun))
-  (let* ((get-file-names (lambda (pkg) (file-name-base (symbol-file pkg))))
-  (diminish-files (mapcar get-file-names modes))
-  (zip-diminish   (-zip modes diminish-files)))
-    `(progn
-       ,@(cl-loop for (mode . file) in zip-diminish
-		  collect `(with-eval-after-load ,file
-			     (diminish (quote ,mode)))))))
-#+END_SRC
+** Historical: diminish
+*** Historical
+22/04/2019: This macro was provided by user [[https://gist.github.com/ld34/44d100b79964407e5ddf41035e3cd32f][ld43]] after I couldn’t figure out how to make diminish work by being at the top of the config file.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package diminish
-    :ensure t
-    :defer nil
-    :config
-    (diminish-built-in
-      beacon-mode
-      which-key-mode
-      page-break-lines-mode
-      undo-tree-mode
-      eldoc-mode
-      abbrev-mode
-      irony-mode
-      company-mode
-      visual-line-mode
-      meghanada-mode))
+  ;(defmacro diminish-built-in (&rest modes)
+  ;  "Accepts a list MODES of built-in emacs modes and generates `with-eval-after-load` diminish forms based on the file implementing the mode functionality for each mode."
+  ;  (declare (indent defun))
+  ;  (let* ((get-file-names (lambda (pkg) (file-name-base (symbol-file pkg))))
+  ;	 (diminish-files (mapcar get-file-names modes))
+  ;	 (zip-diminish   (-zip modes diminish-files)))
+  ;    `(progn
+  ;       ,@(cl-loop for (mode . file) in zip-diminish
+  ;		  collect `(with-eval-after-load ,file
+  ;			     (diminish (quote ,mode)))))))
+  ; This bit goes in init.el
+  ;(diminish-built-in
+  ;  beacon-mode
+  ;  which-key-mode
+  ;  page-break-lines-mode
+  ;  undo-tree-mode
+  ;  eldoc-mode
+  ;  abbrev-mode
+  ;  irony-mode
+  ;  company-mode
+  ;  meghanada-mode)
 #+END_SRC
+
+27/05/2019: Since the diminish functionality was always built-in in use-package, there was never a point in using diminish. I still leave its entry here for historical purposes.
 ** Initialize spaceline
 *** Description
 I tried spaceline and didn't like it. What I did like was its theme
@@ -325,9 +330,10 @@ Incredibly useful package; if you are in the middle of a command and don't know 
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package which-key
-	:ensure t
-	:init
-	(which-key-mode))
+    :ensure t
+    :diminish which-key-mode
+    :init
+    (which-key-mode))
 #+END_SRC
 ** Initialize swiper
 *** Description
@@ -364,9 +370,10 @@ You might find beacon an unnecesary package but I find it very neat. It briefly 
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package beacon
-	:ensure t
-	:init
-	(beacon-mode 1))
+    :ensure t
+    :diminish beacon-mode
+    :init
+    (beacon-mode 1))
 #+END_SRC
 ** Initialize avy
 *** Description
@@ -427,6 +434,32 @@ Utilize asynchronous processes whenever possible
 	:init
 	(dired-async-mode 1))
 #+END_SRC
+** Initialize page-break-lines
+*** Code
+#+BEGIN_SRC emacs-lisp
+  (use-package page-break-lines
+    :ensure t
+    :diminish (page-break-lines-mode visual-line-mode))
+#+END_SRC
+** Initialize undo-tree
+*** Code
+#+BEGIN_SRC emacs-lisp
+  (use-package undo-tree
+    :ensure t
+    :diminish undo-tree-mode)
+#+END_SRC
+** Built-in entry: eldoc
+*** Code
+#+BEGIN_SRC emacs-lisp
+  (use-package eldoc
+    :diminish eldoc-mode)
+#+END_SRC
+** Built-in entry: abbrev
+*** Code
+#+BEGIN_SRC emacs-lisp
+  (use-package abbrev
+    :diminish abbrev-mode)
+#+END_SRC
 * Programming section
 ** Company
 *** Description
@@ -435,6 +468,7 @@ Company is the autocompletion frontend that takes all the backends and gives you
 #+BEGIN_SRC emacs-lisp
   (use-package company
     :ensure t
+    :diminish company-mode
     :config
     (setq company-idle-delay 0)
     (setq company-minimum-prefix-length 3)
@@ -467,16 +501,20 @@ Irony is the company backend for C and C++
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package company-c-headers
+    :defer nil
     :ensure t)
 
   (use-package company-irony
+    :defer nil
     :ensure t
     :config
     (setq company-backends '((company-c-headers
                               company-dabbrev-code
                               company-irony))))
   (use-package irony
+    :defer nil
     :ensure t
+    :diminish irony-mode
     :config
     :hook
     ((c++-mode c-mode) . irony-mode)
@@ -489,6 +527,8 @@ I use meghanada to provide very neat autocompletion when editing Java files. Of 
 #+BEGIN_SRC emacs-lisp
   (use-package meghanada
     :ensure t
+    :defer nil
+    :diminish meghanada-mode
     :config
     (add-hook 'java-mode-hook
               (lambda ()
