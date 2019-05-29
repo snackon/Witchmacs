@@ -1,5 +1,46 @@
+#+STARTUP: overview
+#+TITLE: Witchmacs
+#+LANGUAGE: en
+#+OPTIONS: num:nil
+The cutest Emacs distribution
+[[./gnumarisa.png]]
 * Introduction
 Witchmacs is a very simple and basic configuration file for Emacs. From here you can edit, remove, or add many aspects of Emacs you want. I encourage you to do so, because Emacs works best when it's customized to your own liking!
+* Why would I use this?
+#+BEGIN_QUOTE
+What's the difference between a villain and a super villain? Presentation!
+#+END_QUOTE
+Currently, the appeal of Witchmacs is seeing a cute Marisa picture everytime you start up Emacs. Also, it is a very basic config which means you can easily add, edit or remove things as you like. You can use this as a building block when making your OWN Emacs config!
+
+#+BEGIN_QUOTE
+Ogres are like onions
+
+They smell?
+
+Yes - No! onions have layers! ogres have layers!
+#+END_QUOTE
+As opposed to many other Emacs distributions, Witchmacs has ZERO customization layers which means you can just jump in, look at the config file and start editing away! After all, Emacs works best when it's customized to your own liking!
+* Quick install
+#+BEGIN_SRC 
+git clone https://github.com/snackon/Witchmacs ~/.emacs.d
+#+END_SRC
+After running this command, the first time you run Emacs will download all of the specified packages in the config.org file, so please be patient!
+
+Also, to get autocompletion on C, C++ and Java files, you'll need to install the corresponding company backend servers first (you'll be automatically prompted to do so the first time you open a relevant file)
+* Dependencies
+=clang= as backend for C and C++ autocompletion
+
+=llvm= to install irony server
+* Things-to-do
+- Add and configure some extra packages
+- +Make dashboard cooler+
+ + Make dashboard EVEN cooler!
+ + Maybe add rotating dashboard pictures
+- +Make custom Witchmacs theme+
+ + (Maybe) Make custom theme for other Marisa color schemes or different touhous
+- +Clean up/organize init.el+
+ + Clean up/organize config.org
+- Optimize startup time
 * QoL section
 ** Enable line numbers
 Emacs breaks certain modes when it has line-numbers-mode enabled, (like docview or ansi-term) so I utilize the approach of only enabling it on some major modes rather than globally
