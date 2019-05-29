@@ -3,6 +3,7 @@
 #+LANGUAGE: en
 #+OPTIONS: num:nil
 The cutest Emacs distribution
+
 [[./gnumarisa.png]]
 * Introduction
 Witchmacs is a very simple and basic configuration file for Emacs. From here you can edit, remove, or add many aspects of Emacs you want. I encourage you to do so, because Emacs works best when it's customized to your own liking!
