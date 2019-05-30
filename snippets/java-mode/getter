@@ -1,0 +1,7 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: getter
+# key: get
+# --
+public ${1:type} get${2:Thing}() {
+       return ${2:$(downcase yas-text)};
+}

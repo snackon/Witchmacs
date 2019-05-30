@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: main
+# key: mn
+# --
+public static void main(String[] args) {
+       $0
+}

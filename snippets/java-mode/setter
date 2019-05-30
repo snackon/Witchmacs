@@ -1,0 +1,7 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: setter
+# key: set
+# --
+public void set${1:Thing} (${2:type} ${1:$(downcase yas-text)}) {
+	   this.${1:$(downcase yas-text)} = ${1:$(downcase yas-text)};
+}
