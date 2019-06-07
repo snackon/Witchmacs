@@ -3,7 +3,6 @@
 #+LANGUAGE: en
 #+OPTIONS: num:nil
 The cutest Emacs distribution
-
 [[./gnumarisa.png]]
 * Introduction
 Witchmacs is a very simple and basic configuration file for Emacs. From here you can edit, remove, or add many aspects of Emacs you want. I encourage you to do so, because Emacs works best when it's customized to your own liking!
@@ -43,6 +42,7 @@ Also, to get autocompletion on C, C++ and Java files, you'll need to install the
  + Clean up/organize config.org
 - Optimize startup time
 * QoL section
+Minor quality-of-life modifications for a more pleasant Emacs experience
 ** Enable line numbers
 Emacs breaks certain modes when it has line-numbers-mode enabled, (like docview or ansi-term) so I utilize the approach of only enabling it on some major modes rather than globally
 #+BEGIN_SRC emacs-lisp
@@ -285,92 +285,67 @@ The frontend of Witchmacs; without this there'd be no Marisa in your Emacs start
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package dashboard
-  :ensure t
-  :defer nil
-  :preface
-	(defun update-config ()
-	  "Update Witchmacs to the latest version."
-	  (interactive)
-	  (let ((dir (expand-file-name user-emacs-directory)))
-		(if (file-exists-p dir)
-			(progn
-			  (message "Witchmacs is updating!")
-			  (cd dir)
-			  (shell-command "git pull")
-			  (message "Update finished. Switch to the messages buffer to see changes and then restart Emacs"))
-		  (message "\"%s\" doesn't exist." dir))))
+    :ensure t
+    :defer nil
+    :preface
+    (defun update-config ()
+      "Update Witchmacs to the latest version."
+      (interactive)
+      (let ((dir (expand-file-name user-emacs-directory)))
+        (if (file-exists-p dir)
+            (progn
+              (message "Witchmacs is updating!")
+              (cd dir)
+              (shell-command "git pull")
+              (message "Update finished. Switch to the messages buffer to see changes and then restart Emacs"))
+          (message "\"%s\" doesn't exist." dir))))
 
-	(defun create-scratch-buffer ()
-	  "Create a scratch buffer"
-	  (interactive)
-	  (switch-to-buffer (get-buffer-create "*scratch*"))
-	  (lisp-interaction-mode))
-
-	(defun dashboard-center-line (&optional real-width)
-		"Center-align when point is at the end of a line"
-		(let* ((width (or real-width (current-column)))
-			   (margin (max 0 (floor (/ (- dashboard-banner-length width) 2)))))
-		  (beginning-of-line)
-		  (insert (make-string margin ?\s))
-		  (end-of-line)))
-
-	(defun dashboard-insert-buttons()
-	  "Insert custom buttons after banner"
-	  (interactive)
-	  (with-current-buffer (get-buffer dashboard-buffer-name)
-		(read-only-mode -1)
-		(goto-char (point-min))
-		(search-forward dashboard-banner-logo-title nil t)
-
-		(insert "\n\n\n")
-		(widget-create 'url-link
-					   :tag "Witchmacs on github"
-					   :help-echo "Open Witchmacs' github page on your browser"
-					   :mouse-face 'highlight
-					   "https://github.com/snackon/witchmacs")
-
-		(insert " ")
-		(widget-create 'file-link
-					   :tag "Witchmacs Cheatsheet"
-					   :help-echo "Open Witchmacs cheatsheet"
-					   :mouse-face 'highlight
-					   "~/.emacs.d/Witcheat.org")
-
-		(insert " ")
-		(widget-create 'push-button
-				   :tag "Update Witchmacs"
-				   :help-echo "Get the latest Witchmacs update. Check out the github commits for changes!"
-				   :mouse-face 'highlight
-				   :action (lambda (&rest _) (update-config)))
-
-		(dashboard-center-line)
-		(insert "\n")
-
-		(insert " ")
-		(widget-create 'push-button
-					   :tag "Open scratch buffer"
-					   :help-echo "Switch to the scratch buffer"
-					   :mouse-face 'highlight
-					   :action (lambda (&rest _) (create-scratch-buffer)))
-		(insert " ")
-		(widget-create 'file-link
-					   :tag "Open config.org"
-					   :help-echo "Open Witchmacs' configuration file for easy editing"
-					   :mouse-face 'highlight
-					   "~/.emacs.d/config.org")
-
-		(dashboard-center-line)
-
-		(read-only-mode 1)))
-	:config
-	(dashboard-setup-startup-hook)
-	(setq dashboard-items '((recents . 5)))
-	(setq dashboard-banner-logo-title "W I T C H M A C S - The cutest Emacs distribution!")
-	(setq dashboard-startup-banner "~/.emacs.d/marivector.png")
-	(setq dashboard-center-content t)
-	(setq dashboard-show-shortcuts nil)
-	(setq dashboard-set-init-info t))
-	(add-hook 'dashboard-mode-hook #'dashboard-insert-buttons)
+    (defun create-scratch-buffer ()
+      "Create a scratch buffer"
+      (interactive)
+      (switch-to-buffer (get-buffer-create "*scratch*"))
+      (lisp-interaction-mode))
+    :config
+    (dashboard-setup-startup-hook)
+    (setq dashboard-items '((recents . 5)))
+    (setq dashboard-banner-logo-title "W I T C H M A C S - The cutest Emacs distribution!")
+    (setq dashboard-startup-banner "~/.emacs.d/marivector.png")
+    (setq dashboard-center-content t)
+    (setq dashboard-show-shortcuts nil)
+    (setq dashboard-set-init-info t)
+    (setq dashboard-init-info (format "%d packages loaded in %s"
+                                      (length package-activated-list) (emacs-init-time)))
+    (setq dashboard-set-footer nil)
+    (setq dashboard-set-navigator t)
+    (setq dashboard-navigator-buttons
+          `(;; line1
+            ((,nil
+              "Witchmacs on github"
+              "Open Witchmacs' github page on your browser"
+              (lambda (&rest _) (browse-url "https://github.com/snackon/witchmacs"))
+              'default)
+             (nil
+              "Witchmacs crash course"
+              "Open Witchmacs' introduction to Emacs"
+              (lambda (&rest _) (find-file "~/.emacs.d/witcheat.org"))
+              'default)
+             (nil
+              "Update Witchmacs"
+              "Get the latest Witchmacs update. Check out the github commits for changes!"
+              (lambda (&rest _) (update-config))
+              'default)
+             )
+            ;; line 2
+            ((,nil
+              "Open scratch buffer"
+              "Switch to the scratch buffer"
+              (lambda (&rest _) (create-scratch-buffer))
+              'default)
+             (nil
+              "Open config.org"
+              "Open Witchmacs' configuration file for easy editing"
+              (lambda (&rest _) (find-file "~/.emacs.d/config.org"))
+              'default)))))
 #+END_SRC
 *** Notes
 If you pay close attention to the code in dashboard, you'll  notice that it uses custom functions defined under the :preface use-package block. I wrote all of those functions by looking at other people's Emacs distributions (Mainly [[https://github.com/seagle0128/.emacs.d][Centaur Emacs]]) and then experimenting and adapting them to Witchmacs. If you dig around, you'll find the same things I did - maybe even more!
@@ -516,6 +491,83 @@ Besides the neat syntax highlighting, htmlize enables us to export .org files to
     :ensure t
     :diminish undo-tree-mode)
 #+END_SRC
+** Initialized =treemacs=
+*** Description
+Neat side-bar file and project explorer
+*** Code
+#+BEGIN_SRC emacs-lisp
+  (use-package treemacs
+    :ensure t
+    :defer t
+    :init
+    (with-eval-after-load 'winum
+      (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
+    :config
+    (progn
+      (setq treemacs-collapse-dirs                 (if (executable-find "python3") 3 0)
+            treemacs-deferred-git-apply-delay      0.5
+            treemacs-display-in-side-window        t
+            treemacs-eldoc-display                 t
+            treemacs-file-event-delay              5000
+            treemacs-file-follow-delay             0.2
+            treemacs-follow-after-init             t
+            treemacs-git-command-pipe              ""
+            treemacs-goto-tag-strategy             'refetch-index
+            treemacs-indentation                   2
+            treemacs-indentation-string            " "
+            treemacs-is-never-other-window         nil
+            treemacs-max-git-entries               5000
+            treemacs-missing-project-action        'ask
+            treemacs-no-png-images                 nil
+            treemacs-no-delete-other-windows       t
+            treemacs-project-follow-cleanup        nil
+            treemacs-persist-file                  (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
+            treemacs-recenter-distance             0.1
+            treemacs-recenter-after-file-follow    nil
+            treemacs-recenter-after-tag-follow     nil
+            treemacs-recenter-after-project-jump   'always
+            treemacs-recenter-after-project-expand 'on-distance
+            treemacs-show-cursor                   nil
+            treemacs-show-hidden-files             t
+            treemacs-silent-filewatch              nil
+            treemacs-silent-refresh                nil
+            treemacs-sorting                       'alphabetic-desc
+            treemacs-space-between-root-nodes      t
+            treemacs-tag-follow-cleanup            t
+            treemacs-tag-follow-delay              1.5
+            treemacs-width                         30)
+
+      ;; The default width and height of the icons is 22 pixels. If you are
+      ;; using a Hi-DPI display, uncomment this to double the icon size.
+      (treemacs-resize-icons 11)
+
+      (treemacs-follow-mode t)
+      (treemacs-filewatch-mode t)
+      (treemacs-fringe-indicator-mode t)
+      (pcase (cons (not (null (executable-find "git")))
+                   (not (null (executable-find "python3"))))
+        (`(t . t)
+         (treemacs-git-mode 'deferred))
+        (`(t . _)
+         (treemacs-git-mode 'simple))))
+    :bind
+    (:map global-map
+          ("M-0"       . treemacs-select-window)
+          ("C-x t 1"   . treemacs-delete-other-windows)
+          ("C-x t t"   . treemacs)
+          ("C-x t B"   . treemacs-bookmark)
+          ("C-x t C-t" . treemacs-find-file)
+          ("C-x t M-t" . treemacs-find-tag)))
+
+  (use-package treemacs-evil
+    :after treemacs evil
+    :ensure t)
+
+  (use-package treemacs-icons-dired
+    :after treemacs dired
+    :ensure t
+    :config (treemacs-icons-dired-mode))
+#+END_SRC
 ** Built-in entry: =eldoc=
 *** Code
 #+BEGIN_SRC emacs-lisp
@@ -599,5 +651,7 @@ I use meghanada to provide very neat autocompletion when editing Java files. Of 
     :config
     (add-hook 'java-mode-hook
               (lambda ()
-                (meghanada-mode t))))
+                (meghanada-mode t)))
+    (setq meghanada-java-path "java")
+    (setq meghanada-maven-path "mvn"))
 #+END_SRC
