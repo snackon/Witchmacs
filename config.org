@@ -33,7 +33,7 @@ Also, to get autocompletion on C, C++ and Java files, you'll need to install the
 
 =llvm= to install irony server
 
-(optional) ==mvn== maven for java project handling through ==meghanada==
+(optional) =mvn= maven for java project handling through =meghanada=
 * Things-to-do
 - Add and configure some extra packages
 - +Make dashboard cooler+
@@ -563,7 +563,7 @@ Neat side-bar file and project explorer
       :ensure t
       :config (treemacs-icons-dired-mode))
 #+END_SRC
-** Initialize ==magit==
+** Initialize =magit=
 *** Description
 Git porcelain for Emacs
 *** Code
