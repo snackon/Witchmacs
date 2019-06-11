@@ -3,6 +3,7 @@
 #+LANGUAGE: en
 #+OPTIONS: num:nil
 The cutest Emacs distribution
+
 [[./gnumarisa.png]]
 * Introduction
 Witchmacs is a very simple and basic configuration file for Emacs. From here you can edit, remove, or add many aspects of Emacs you want. I encourage you to do so, because Emacs works best when it's customized to your own liking!
@@ -17,7 +18,7 @@ Ogres are like onions
 
 They smell?
 
-Yes - No! onions have layers! ogres have layers!
+Yes - No! layers! onions have layers! ogres have layers!
 #+END_QUOTE
 As opposed to many other Emacs distributions, Witchmacs has ZERO customization layers which means you can just jump in, look at the config file and start editing away! After all, Emacs works best when it's customized to your own liking!
 * Quick install
@@ -31,6 +32,8 @@ Also, to get autocompletion on C, C++ and Java files, you'll need to install the
 =clang= as backend for C and C++ autocompletion
 
 =llvm= to install irony server
+
+(optional) ==mvn== maven for java project handling through ==meghanada==
 * Things-to-do
 - Add and configure some extra packages
 - +Make dashboard cooler+
@@ -96,11 +99,11 @@ Emacs breaks certain modes when it has line-numbers-mode enabled, (like docview 
 ** Enable bracket pair-matching
 #+BEGIN_SRC emacs-lisp
   (setq electric-pair-pairs '(
-							 (?\{ . ?\})
-							 (?\( . ?\))
-							 (?\[ . ?\])
-							 (?\" . ?\")
-							))
+                              (?\{ . ?\})
+                              (?\( . ?\))
+                              (?\[ . ?\])
+                              (?\" . ?\")
+                              ))
   (electric-pair-mode t)
 #+END_SRC
 ** Creating a new window switches your cursor to it
@@ -153,6 +156,9 @@ One of the main selling points of Emacs! no Emacs distribution is complete witho
 
   (use-package org-indent
     :diminish org-indent-mode)
+
+  (use-package htmlize
+    :ensure t)
 #+END_SRC
 * Eshell
 ** Why Eshell?
@@ -161,7 +167,7 @@ We are using Emacs, so we might as well implement as many tools from our workflo
 Eshell cannot handle ncurses programs and in certain interpreters (Python, GHCi) selecting previous commands does not work (for now). I recommend using eshell for light cli work, and using your external terminal emulator of choice for heavier tasks
 ** Prompt
 #+BEGIN_SRC emacs-lisp
-  (setq eshell-prompt-regexp "^[^αλ\n]*[αλ>] " ; "^[^αλ\n]*[αλ] "
+  (setq eshell-prompt-regexp "^[^αλ\n]*[αλ] " ; "^[^αλ\n]*[αλ] "
         eshell-prompt-function
         (lambda nil
           (concat
@@ -327,7 +333,7 @@ The frontend of Witchmacs; without this there'd be no Marisa in your Emacs start
              (nil
               "Witchmacs crash course"
               "Open Witchmacs' introduction to Emacs"
-              (lambda (&rest _) (find-file "~/.emacs.d/witcheat.org"))
+              (lambda (&rest _) (find-file "~/.emacs.d/Witcheat.org"))
               'default)
              (nil
               "Update Witchmacs"
@@ -469,14 +475,6 @@ Utilize asynchronous processes whenever possible
 	:init
 	(dired-async-mode 1))
 #+END_SRC
-** Initialize =htmlize=
-*** Description
-Besides the neat syntax highlighting, htmlize enables us to export .org files to .html
-*** Code
-#+BEGIN_SRC emacs-lisp
-  (use-package htmlize
-    :ensure t)
-#+END_SRC
 ** Initialize =page-break-lines=
 *** Code
 #+BEGIN_SRC emacs-lisp
@@ -491,7 +489,7 @@ Besides the neat syntax highlighting, htmlize enables us to export .org files to
     :ensure t
     :diminish undo-tree-mode)
 #+END_SRC
-** Initialized =treemacs=
+** Initialize =treemacs=
 *** Description
 Neat side-bar file and project explorer
 *** Code
@@ -536,11 +534,8 @@ Neat side-bar file and project explorer
             treemacs-tag-follow-cleanup            t
             treemacs-tag-follow-delay              1.5
             treemacs-width                         30)
-
-      ;; The default width and height of the icons is 22 pixels. If you are
-      ;; using a Hi-DPI display, uncomment this to double the icon size.
       (treemacs-resize-icons 11)
-
+	
       (treemacs-follow-mode t)
       (treemacs-filewatch-mode t)
       (treemacs-fringe-indicator-mode t)
@@ -561,12 +556,20 @@ Neat side-bar file and project explorer
 
   (use-package treemacs-evil
     :after treemacs evil
-    :ensure t)
+      :ensure t)
 
-  (use-package treemacs-icons-dired
-    :after treemacs dired
-    :ensure t
-    :config (treemacs-icons-dired-mode))
+    (use-package treemacs-icons-dired
+      :after treemacs dired
+      :ensure t
+      :config (treemacs-icons-dired-mode))
+#+END_SRC
+** Initialize ==magit==
+*** Description
+Git porcelain for Emacs
+*** Code
+#+BEGIN_SRC emacs-lisp
+  (use-package magit
+    :ensure t)
 #+END_SRC
 ** Built-in entry: =eldoc=
 *** Code
@@ -642,7 +645,7 @@ Irony is the company backend for C and C++
 #+END_SRC
 ** Java
 *** Description
-I use meghanada to provide very neat autocompletion when editing Java files. Of course there's a lot more things it can do, but I prefer using it only for that
+I use meghanada to provide very neat autocompletion when editing Java files. I use it mainly for autocompletion but there's a ton of other things it can do, automatic imports, for example.
 *** Code
 #+BEGIN_SRC emacs-lisp
   (use-package meghanada
