@@ -167,20 +167,19 @@ We are using Emacs, so we might as well implement as many tools from our workflo
 Eshell cannot handle ncurses programs and in certain interpreters (Python, GHCi) selecting previous commands does not work (for now). I recommend using eshell for light cli work, and using your external terminal emulator of choice for heavier tasks
 ** Prompt
 #+BEGIN_SRC emacs-lisp
-  (setq eshell-prompt-regexp "^[^αλ\n]*[αλ] " ; "^[^αλ\n]*[αλ] "
-        eshell-prompt-function
+  (setq eshell-prompt-regexp "^[^αλ\n]*[αλ] ")
+  (setq eshell-prompt-function
         (lambda nil
           (concat
            (if (string= (eshell/pwd) (getenv "HOME"))
-               (propertize
-                "~"
-                'face `(:foreground "#99CCFF"))
-             (propertize
-              (eshell/basename (eshell/pwd))
-              'face `(:foreground "#99CCFF"))
-             )
-           (if (= (user-uid) 0) (propertize " α " 'face `(:foreground "#FF6666")) (propertize " λ " 'face `(:foreground "#A6E22E"))
-               ))))
+               (propertize "~" 'face `(:foreground "#99CCFF"))
+             (replace-regexp-in-string
+              (getenv "HOME")
+              (propertize "~" 'face `(:foreground "#99CCFF"))
+              (propertize (eshell/pwd) 'face `(:foreground "#99CCFF"))))
+           (if (= (user-uid) 0)
+               (propertize " α " 'face `(:foreground "#FF6666"))
+           (propertize " λ " 'face `(:foreground "#A6E22E"))))))
 
   (setq eshell-highlight-prompt nil)
 #+END_SRC
