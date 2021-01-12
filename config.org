@@ -171,12 +171,8 @@ Eshell cannot handle ncurses programs and in certain interpreters (Python, GHCi)
   (setq eshell-prompt-function
         (lambda nil
           (concat
-           (if (string= (eshell/pwd) (getenv "HOME"))
-               (propertize "~" 'face `(:foreground "#99CCFF"))
-             (replace-regexp-in-string
-              (getenv "HOME")
-              (propertize "~" 'face `(:foreground "#99CCFF"))
-              (propertize (eshell/pwd) 'face `(:foreground "#99CCFF"))))
+		   (propertize (abbreviate-file-name (eshell/pwd))
+					   'face `(:foreground "#99CCFF"))
            (if (= (user-uid) 0)
                (propertize " α " 'face `(:foreground "#FF6666"))
            (propertize " λ " 'face `(:foreground "#A6E22E"))))))
@@ -193,12 +189,10 @@ Eshell cannot handle ncurses programs and in certain interpreters (Python, GHCi)
 #+BEGIN_SRC emacs-lisp
   (defun eshell/sudo-open (filename)
     "Open a file as root in Eshell."
-    (let ((qual-filename (if (string-match "^/" filename)
-                             filename
-                           (concat (expand-file-name (eshell/pwd)) "/" filename))))
       (switch-to-buffer
        (find-file-noselect
-        (concat "/sudo::" qual-filename)))))
+	  (concat "/sudo::"
+			  (expand-file-name filename (eshell/pwd))))))
 #+END_SRC
 *** Super - Control - RET to open eshell
 #+BEGIN_SRC emacs-lisp
